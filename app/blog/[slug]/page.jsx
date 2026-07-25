@@ -38,13 +38,14 @@ export default async function BlogDetails({ params }) {
       </div>
 
       {/* Featured Image */}
-      <div className="relative w-full h-[420px] rounded-2xl overflow-hidden mb-10">
+      <div className="relative w-full aspect-[1162/586] rounded-2xl overflow-hidden mb-10">
         <Image
           src={blog.image}
           alt={blog.title}
           fill
           priority
-          className="object-cover"
+          sizes="(max-width: 896px) 100vw, 896px"
+          className="object-contain"
         />
       </div>
 
@@ -59,7 +60,7 @@ export default async function BlogDetails({ params }) {
       {/* What Is */}
       <section className="mb-8">
         <h2 className="text-3xl font-bold mb-4">
-          What is BMI?
+          {blog.whatIsTitle}
         </h2>
 
         <p className="text-gray-700 leading-8">
@@ -246,18 +247,17 @@ export default async function BlogDetails({ params }) {
 
               {/* Image */}
               <div className="relative h-48 overflow-hidden">
-
                 <Image
                   src={blog.image}
                   alt={blog.title}
                   fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover group-hover:scale-105 transition duration-500"
                 />
 
                 <span className="absolute top-3 left-3 bg-blue-600 text-white text-xs font-medium px-3 py-1 rounded-full">
                   {blog.category}
                 </span>
-
               </div>
 
               {/* Content */}

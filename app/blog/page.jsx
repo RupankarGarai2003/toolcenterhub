@@ -33,14 +33,13 @@ export default function BlogPage() {
 
             {/* Image */}
             <div className="relative h-44 w-full overflow-hidden">
-
               <Image
                 src={blog.image}
                 alt={blog.title}
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
-
             </div>
 
             {/* Content */}
