@@ -4,6 +4,9 @@ import { getSeoData } from "@/utils/seo";
 import { redirect } from "next/navigation";
 import ToolHeading from "@/components/tools/ToolHeading";
 import { getDynamicHeading } from "@/utils/toolVariants";
+import { getVariantFaqs } from "@/utils/getVariantFaqs";
+import { getVariantHowToTitle } from "@/utils/getVariantHowTo";
+import { getToolCategory } from "@/utils/toolCategory";
 
 function parseSlug(slug) {
   const decoded = decodeURIComponent(slug)
@@ -325,53 +328,64 @@ export default async function Page({
     },
   };
 
+  /* Reuse the exact same FAQ content that FAQ.jsx renders on the page,
+     so the schema never contradicts what a visitor (or Google) actually sees. */
+  const variantFaqs = getVariantFaqs(toolData.name, slug);
+
+  const baseFaqs = [
+    {
+      q: `Is ${toolData.name} free to use?`,
+      a: `Yes, ${toolData.name} is completely free to use with no signup required.`,
+    },
+    {
+      q: "Are my files secure?",
+      a: "Files are processed securely and are not permanently stored on our servers.",
+    },
+  ];
+
+  const faqList = variantFaqs.length > 0 ? variantFaqs : baseFaqs;
+
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
 
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: "Is this tool free to use?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Yes, this tool is completely free to use."
-        }
+    mainEntity: faqList.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: f.a,
       },
-
-      {
-        "@type": "Question",
-        name: "Are my files secure?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Files are processed securely and are not permanently stored."
-        }
-      }
-    ]
+    })),
   };
+
+  const { verb, noun } = getToolCategory(toolData.name);
 
   const howToSchema = {
     "@context": "https://schema.org",
     "@type": "HowTo",
 
-    name: toolData.name,
+    name: getVariantHowToTitle(toolData.name, slug),
 
     description: toolData.description,
 
     step: [
       {
         "@type": "HowToStep",
-        name: "Upload File"
+        name: "Upload File",
+        text: `Upload your ${noun} to ${toolData.name}. Nothing is installed and no account is needed.`,
       },
       {
         "@type": "HowToStep",
-        name: "Process File"
+        name: "Process File",
+        text: `Let the tool ${verb} your ${noun} automatically.`,
       },
       {
         "@type": "HowToStep",
-        name: "Download Result"
-      }
-    ]
+        name: "Download Result",
+        text: "Download the finished file instantly to your device.",
+      },
+    ],
   };
   return (
     <>

@@ -1,5 +1,6 @@
 
 import { getVariantName } from "./toolVariants";
+import { getToolCategory } from "./toolCategory";
 
 export function getVariantFaqs(toolName, slug) {
   const variant = getVariantName(slug);
@@ -13,20 +14,22 @@ export function getVariantFaqs(toolName, slug) {
     .replace(/-/g, " ")
     .replace(/\b\w/g, c => c.toUpperCase());
 
+  const { formats, verb } = getToolCategory(toolName);
+
   return [
     {
       q: `How can I use ${toolName} ${label} online for free?`,
-      a: `Simply upload your file, process it using our online ${toolName}, and download the optimized result instantly. No registration or software installation is required.`,
+      a: `Simply upload your file, ${verb} it using our online ${toolName}, and download the result instantly. No registration or software installation is required.`,
     },
 
     {
-      q: `How do I resize an image ${label} without losing quality?`,
-      a: `${toolName} uses advanced optimization methods to help maintain image quality while resizing, compressing, or converting your files according to your selected requirements.`,
+      q: `Does ${toolName} ${label} affect quality or accuracy?`,
+      a: `${toolName} is built to ${verb} your file while preserving quality and accuracy as closely as possible to your original.`,
     },
 
     {
       q: `Which file formats are supported by ${toolName} ${label}?`,
-      a: `Our tool supports popular formats such as JPG, JPEG, PNG, WEBP, PDF, and other commonly used file types depending on the selected tool.`,
+      a: `Our tool supports ${formats}, so you can work with the file types you actually need for this task.`,
     },
 
     {
@@ -51,7 +54,7 @@ export function getVariantFaqs(toolName, slug) {
 
     {
       q: `Why should I use ${toolName} ${label}?`,
-      a: `${toolName} helps you save time by quickly optimizing files while maintaining quality, making them suitable for websites, social media, online applications, business documents, and personal use.`,
+      a: `${toolName} ${label} helps you save time by handling this task quickly and reliably, without needing extra software or technical knowledge.`,
     },
   ];
 }

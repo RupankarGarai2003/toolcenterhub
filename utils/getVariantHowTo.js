@@ -1,5 +1,6 @@
 
 import { getVariantName } from "./toolVariants";
+import { getToolCategory } from "./toolCategory";
 
 export function getVariantHowToTitle(toolName, slug) {
   const variant = getVariantName(slug);
@@ -15,18 +16,20 @@ export function getVariantHowToTitle(toolName, slug) {
     .replace(/-/g, " ")
     .replace(/\b\w/g, c => c.toUpperCase());
 
+  const { noun } = getToolCategory(toolName);
+
   // File size pages
   if (
     variant.startsWith("under-") ||
     variant.startsWith("to-") ||
     /^\d+(kb|mb)$/.test(variant)
   ) {
-    return `How to Resize Images ${label} Online`;
+    return `How to Get ${toolName} ${label} Online`;
   }
 
   // Social media pages
   if (variant.startsWith("for-")) {
-    return `How to Resize Images for ${label}`;
+    return `How to Use ${toolName} for ${label}`;
   }
 
   // Document pages
