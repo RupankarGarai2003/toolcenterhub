@@ -12,13 +12,18 @@ const toolSeoVariants: Record<
     "for-whatsapp",
     "for-linkedin",
     "for-youtube-thumbnail",
+    "for-youtube", // GSC: 74 impressions, real demand
 
+    "20kb", // GSC: 78 impressions
     "under-20kb",
     "under-50kb",
     "under-100kb",
     "under-200kb",
     "under-500kb",
     "under-1mb",
+    "1mb", // GSC: 161 impressions
+
+    "profilephoto", // GSC: 11 impressions, position 8.3
 
     "passport-photo",
     "signature",
@@ -37,6 +42,8 @@ const toolSeoVariants: Record<
 
     "for-instagram",
     "for-whatsapp",
+
+    "pan-card", // GSC: position 5.0, real clicks already
   ],
 
   /* IMAGE CROPPER */
@@ -57,6 +64,10 @@ const toolSeoVariants: Record<
     "webp-to-png",
     "png-to-webp",
     "jpg-to-webp",
+
+    "free", // GSC: 63 impressions
+    "under-50kb", // GSC: 21 impressions, has clicks
+    "for-youtube", // GSC: early position 1.0
   ],
 
   /* PNG TO JPG */
@@ -74,17 +85,23 @@ const toolSeoVariants: Record<
   "pdf-to-word": [
     "with-ocr",
     "editable-word",
+
+    "aadhaar-card", // GSC: real demand, position 6.0
   ],
 
   /* WORD TO PDF */
   "word-to-pdf": [
     "docx-to-pdf",
     "maker",
+
+    "aadhaar-card", // GSC: real demand, position 6.0
   ],
 
   /* JPG TO PDF */
   "jpg-to-pdf": [
     "multiple-images",
+
+    "200kb", // GSC: 45 impressions, position 44.0
   ],
 
   /* PDF MERGER */
@@ -96,6 +113,8 @@ const toolSeoVariants: Record<
   "pdf-splitter": [
     "extract-pages",
     "split-large-pdf",
+
+    "under-50kb", // GSC: 11 impressions, position 10.5
   ],
 
   /* PDF TO JPG */
@@ -103,6 +122,10 @@ const toolSeoVariants: Record<
     "high-quality",
     "extract-images",
     "100kb",
+
+    "aadhaar", // GSC: 10 impressions, position 9.7
+    "examform", // GSC: position 10.0
+    "under-20kb", // GSC: position 3.0
   ],
 
   /* QR CODE GENERATOR */
@@ -132,6 +155,8 @@ const toolSeoVariants: Record<
     "and-compare",
     "to-single-line",
     "beautify-json",
+
+    "under-150kb", // GSC: 41 impressions, position 78.9
   ],
 
   /* JSON VALIDATOR */
@@ -139,6 +164,8 @@ const toolSeoVariants: Record<
     "and-fixer",
     "with-schema",
     "validate-json",
+
+    "and-beautifier", // GSC: position 6.5
   ],
 
   /* BASE64 ENCODER */
@@ -154,11 +181,15 @@ const toolSeoVariants: Record<
     "to-file",
     "to-pdf",
     "base64-to-text",
+
+    "twitter", // GSC: 35 impressions, position 30.8
   ],
 
   /* HTML MINIFIER */
   "html-minifier": [
     "compress-html",
+
+    "aadhaar", // GSC: 14 impressions, position 10.4
   ],
 
   /* CSS MINIFIER */
@@ -183,6 +214,9 @@ const toolSeoVariants: Record<
   /* URL DECODER */
   "url-decoder": [
     "decode-url",
+
+    "under-5mb", // GSC: 425 impressions — highest of any variant, real demand
+    "for-youtube", // GSC: position 11.0
   ],
 };
 
