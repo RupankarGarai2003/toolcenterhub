@@ -362,6 +362,414 @@ const aboutContent = {
 },
 
 
+"emi-calculator": {
+  title: "About EMI Calculator",
+  content: `
+        EMI Calculator is a free online tool that helps you calculate the Equated Monthly Installment for home loans, car loans, and personal loans. Enter the loan amount, interest rate, and tenure to instantly see your monthly payment.
+
+        The tool also breaks down the total interest you will pay over the life of the loan and the total amount repaid, helping you compare loan offers and plan your budget more effectively.
+
+        This calculator is useful for borrowers, financial planners, and anyone comparing loan options before making a borrowing decision. All calculations happen instantly in your browser.
+      `,
+},
+
+"compound-interest-calculator": {
+  title: "About Compound Interest Calculator",
+  content: `
+        Compound Interest Calculator is a free online tool that calculates how your money grows over time when interest is compounded annually, semi-annually, quarterly, or monthly.
+
+        Simply enter the principal amount, annual interest rate, time period, and compounding frequency to see the future value of your investment and the total interest earned.
+
+        This tool is useful for investors, students, and anyone planning savings, fixed deposits, or long-term investments.
+      `,
+},
+
+"simple-interest-calculator": {
+  title: "About Simple Interest Calculator",
+  content: `
+        Simple Interest Calculator is a free online tool that calculates interest earned or owed based on a fixed principal amount, without compounding.
+
+        Enter the principal, annual interest rate, and time period in years to instantly see the interest amount and the total repayment or maturity value.
+
+        This tool is useful for loans, short-term deposits, and any scenario where interest accrues in a straight line rather than compounding.
+      `,
+},
+
+"gst-calculator": {
+  title: "About GST Calculator",
+  content: `
+        GST Calculator is a free online tool that helps you add or remove GST (Goods and Services Tax) from any amount in seconds.
+
+        Choose whether you want to add GST to a base price or extract the GST already included in a total price, enter the GST rate, and get an instant, accurate breakdown.
+
+        This tool is useful for business owners, accountants, freelancers, and shoppers who need to verify GST-inclusive or GST-exclusive prices.
+      `,
+},
+
+"sales-tax-calculator": {
+  title: "About Sales Tax Calculator",
+  content: `
+        Sales Tax Calculator is a free online tool that calculates the sales tax amount and final price for any purchase based on your local tax rate.
+
+        Enter the pre-tax price and the applicable sales tax rate to instantly see the tax amount and the total amount you will pay at checkout.
+
+        This tool is useful for shoppers, retailers, and accountants who need quick and accurate sales tax calculations.
+      `,
+},
+
+"discount-calculator": {
+  title: "About Discount Calculator",
+  content: `
+        Discount Calculator is a free online tool that helps you calculate the final price of a product after a percentage discount is applied.
+
+        Enter the original price and the discount percentage to instantly see how much you save and what the final price will be.
+
+        This tool is useful for shoppers comparing sale prices, and for retailers setting promotional discounts.
+      `,
+},
+
+"tip-calculator": {
+  title: "About Tip Calculator",
+  content: `
+        Tip Calculator is a free online tool that calculates how much tip to leave at a restaurant and how to split the total bill among multiple people.
+
+        Enter the bill amount, desired tip percentage, and number of people to instantly see the tip amount, total bill, and each person's share.
+
+        This tool is useful for diners splitting checks, group outings, and anyone who wants to quickly calculate a fair tip.
+      `,
+},
+
+"profit-margin-calculator": {
+  title: "About Profit Margin Calculator",
+  content: `
+        Profit Margin Calculator is a free online tool that calculates your profit, profit margin percentage, and markup based on cost and selling price.
+
+        Enter the cost price and selling price of a product to instantly see the profit amount, profit margin, and markup percentage.
+
+        This tool is useful for retailers, e-commerce sellers, and business owners pricing products for a target profit margin.
+      `,
+},
+
+"break-even-calculator": {
+  title: "About Break-Even Point Calculator",
+  content: `
+        Break-Even Point Calculator is a free online tool that calculates how many units you need to sell to cover your fixed and variable costs.
+
+        Enter your fixed costs, selling price per unit, and variable cost per unit to instantly see the break-even point in units and revenue.
+
+        This tool is useful for entrepreneurs, small business owners, and financial planners evaluating a new product or business idea.
+      `,
+},
+
+"sip-calculator": {
+  title: "About SIP Calculator",
+  content: `
+        SIP Calculator is a free online tool that estimates the future value of a Systematic Investment Plan (SIP) based on your monthly contribution, expected return rate, and investment period.
+
+        Enter your monthly investment amount, expected annual rate of return, and duration in years to see how much your investment could grow to, along with your total invested amount and estimated gains.
+
+        This tool is useful for mutual fund investors and anyone planning long-term wealth creation through regular monthly investments.
+      `,
+},
+
+"mortgage-calculator": {
+  title: "About Mortgage Calculator",
+  content: `
+        Mortgage Calculator is a free online tool that estimates your monthly home loan payment based on the loan amount, interest rate, and loan term.
+
+        Enter the loan amount, annual interest rate, and term in years to instantly see your monthly payment along with the total interest and total amount paid over the life of the loan.
+
+        This tool is useful for home buyers comparing mortgage offers and planning long-term housing budgets.
+      `,
+},
+
+"bmr-calculator": {
+  title: "About BMR Calculator",
+  content: `
+        BMR Calculator is a free online tool that estimates your Basal Metabolic Rate — the number of calories your body burns at rest to maintain basic functions like breathing and circulation.
+
+        Using the Mifflin-St Jeor equation, enter your gender, age, weight, and height to instantly see your estimated daily BMR in calories.
+
+        This tool is useful for anyone planning a diet, fitness routine, or calorie budget, since BMR forms the baseline for calculating total daily energy needs.
+      `,
+},
+
+"calorie-calculator": {
+  title: "About Calorie Calculator",
+  content: `
+        Calorie Calculator is a free online tool that estimates your daily calorie needs for maintaining, losing, or gaining weight based on your activity level.
+
+        Enter your gender, age, weight, height, and activity level to see your maintenance calories along with suggested calorie targets for weight loss and weight gain.
+
+        This tool is useful for anyone following a diet plan, tracking fitness goals, or building a sustainable nutrition routine.
+      `,
+},
+
+"body-fat-calculator": {
+  title: "About Body Fat Calculator",
+  content: `
+        Body Fat Calculator is a free online tool that estimates your body fat percentage using the U.S. Navy circumference method, based on height, neck, waist, and (for women) hip measurements.
+
+        Simply measure yourself with a tape measure, enter the values, and instantly get an estimated body fat percentage without needing calipers or a DEXA scan.
+
+        This tool is useful for fitness enthusiasts, athletes, and anyone tracking body composition changes over time.
+      `,
+},
+
+"ideal-weight-calculator": {
+  title: "About Ideal Weight Calculator",
+  content: `
+        Ideal Weight Calculator is a free online tool that estimates your ideal body weight based on your height and gender using the Devine formula, a method widely used in medicine.
+
+        Simply enter your height and select your gender to instantly see an estimated healthy weight range as a reference point.
+
+        This tool is useful as a general wellness reference, though ideal weight can vary based on muscle mass, body frame, and individual health factors.
+      `,
+},
+
+"gpa-calculator": {
+  title: "About GPA Calculator",
+  content: `
+        GPA Calculator is a free online tool that calculates your Grade Point Average based on the grade points and credit hours of each course.
+
+        Enter your grade points and corresponding credit hours as comma-separated lists to instantly calculate your weighted GPA.
+
+        This tool is useful for students tracking their academic performance across a semester or entire program.
+      `,
+},
+
+"average-calculator": {
+  title: "About Average Calculator",
+  content: `
+        Average Calculator is a free online tool that calculates the average, sum, count, minimum, and maximum of any list of numbers.
+
+        Simply enter your numbers separated by commas to instantly get a full statistical summary without needing a spreadsheet.
+
+        This tool is useful for students, teachers, analysts, and anyone who needs a quick average of test scores, data points, or measurements.
+      `,
+},
+
+"percentage-change-calculator": {
+  title: "About Percentage Change Calculator",
+  content: `
+        Percentage Change Calculator is a free online tool that calculates the percentage increase or decrease between an old value and a new value.
+
+        Enter the original value and the new value to instantly see whether it increased or decreased, and by what percentage.
+
+        This tool is useful for tracking price changes, sales growth, weight changes, or any comparison between two numbers over time.
+      `,
+},
+
+"date-difference-calculator": {
+  title: "About Date Difference Calculator",
+  content: `
+        Date Difference Calculator is a free online tool that calculates the exact number of years, months, and days between two dates.
+
+        Enter a start date and an end date to instantly see the difference broken down into years, months, and days, along with the total number of days.
+
+        This tool is useful for calculating durations for contracts, project timelines, anniversaries, and countdowns.
+      `,
+},
+
+"time-duration-calculator": {
+  title: "About Time Duration Calculator",
+  content: `
+        Time Duration Calculator is a free online tool that calculates the exact duration between a start time and an end time.
+
+        Enter the start and end times, choose whether the end time falls on the same day or the next day, and instantly see the duration in hours and minutes.
+
+        This tool is useful for calculating work hours, event durations, meeting lengths, and shift timings.
+      `,
+},
+
+"length-converter": {
+  title: "About Length Converter",
+  content: `
+        Length Converter is a free online tool that converts between common length units including meters, kilometers, centimeters, millimeters, miles, yards, feet, and inches.
+
+        Enter a value, choose the unit you're converting from and to, and instantly get an accurate converted result.
+
+        This tool is useful for students, engineers, travelers, and anyone working across metric and imperial measurement systems.
+      `,
+},
+
+"weight-converter": {
+  title: "About Weight Converter",
+  content: `
+        Weight Converter is a free online tool that converts between common weight units including kilograms, grams, pounds, ounces, and metric tons.
+
+        Enter a value, choose the unit you're converting from and to, and instantly get an accurate converted result.
+
+        This tool is useful for cooking, fitness tracking, shipping, and anyone working across metric and imperial weight systems.
+      `,
+},
+
+"temperature-converter": {
+  title: "About Temperature Converter",
+  content: `
+        Temperature Converter is a free online tool that converts temperature values between Celsius, Fahrenheit, and Kelvin instantly.
+
+        Enter a temperature value, choose the unit you're converting from and to, and get an accurate converted result immediately.
+
+        This tool is useful for students, scientists, travelers, and anyone who needs quick, accurate temperature conversions.
+      `,
+},
+
+
+"grammar-checker": {
+  title: "About Grammar Checker",
+  content: `
+        Grammar Checker is a free online tool that scans your writing for grammar mistakes, spelling errors, and punctuation issues, then suggests corrections in real time.
+
+        Paste or type your text, click Check Grammar, and instantly see a list of issues with clear explanations and suggested fixes. You can apply all suggestions at once or review them individually.
+
+        This tool is useful for students, professionals, bloggers, and non-native English speakers who want cleaner, more polished writing before sending an email, publishing a post, or submitting an assignment.
+      `,
+},
+
+"language-translator": {
+  title: "About Language Translator",
+  content: `
+        Language Translator is a free online tool that translates text between English, Spanish, French, German, Hindi, Chinese, Arabic, and several other languages.
+
+        Type or paste your text, choose the source and target languages, and get an instant translation you can copy or use right away. A swap button lets you quickly reverse the translation direction.
+
+        This tool is useful for travelers, students, and professionals who need a quick translation without installing a dedicated app.
+      `,
+},
+
+"text-to-speech-converter": {
+  title: "About Text to Speech Converter",
+  content: `
+        Text to Speech Converter is a free online tool that reads your text aloud using your browser's built-in voices, with adjustable speed and pitch.
+
+        Type or paste any text, choose a voice, adjust the speaking speed and pitch, and click Speak to hear it read aloud instantly. You can pause, resume, or stop playback at any time.
+
+        This tool is useful for proofreading by ear, creating quick voiceovers, assisting with accessibility, or simply listening to articles instead of reading them.
+      `,
+},
+
+"speech-to-text-converter": {
+  title: "About Speech to Text Converter",
+  content: `
+        Speech to Text Converter is a free online tool that transcribes your spoken words into text in real time using your device's microphone.
+
+        Click Start Listening, speak naturally, and watch your words appear as text as you talk. You can edit the transcript directly, then copy it for use elsewhere.
+
+        This tool is useful for dictating notes, drafting emails hands-free, or quickly transcribing short voice memos without typing.
+      `,
+},
+
+"text-summarizer": {
+  title: "About AI Text Summarizer",
+  content: `
+        AI Text Summarizer is a free online tool that uses AI to condense long articles, essays, or documents into a short, clear summary in seconds.
+
+        Paste your text, choose a summary length, and get a well-written summary that captures the key points without losing meaning.
+
+        This tool is useful for students, researchers, and professionals who need to quickly understand long content or prepare a brief overview.
+      `,
+},
+
+"paraphrasing-tool": {
+  title: "About AI Paraphrasing Tool",
+  content: `
+        AI Paraphrasing Tool is a free online tool that rewrites your sentences or paragraphs in a different style while preserving the original meaning.
+
+        Paste your text, choose a tone such as formal, casual, or simple, and get a freshly worded version instantly.
+
+        This tool is useful for writers avoiding repetitive phrasing, students rewording notes in their own words, and professionals adjusting tone for different audiences.
+      `,
+},
+
+"essay-generator": {
+  title: "About AI Essay Generator",
+  content: `
+        AI Essay Generator is a free online tool that uses AI to draft a complete, well-structured essay on any topic you provide.
+
+        Enter your topic, choose an approximate length and tone, and get an essay with a clear introduction, body paragraphs, and conclusion in seconds.
+
+        This tool is useful for students brainstorming structure and ideas, and writers who want a fast first draft to edit and personalize.
+      `,
+},
+
+"content-generator": {
+  title: "About AI Content Generator",
+  content: `
+        AI Content Generator is a free online tool that creates ready-to-use marketing content such as blog intros, product descriptions, social posts, and ad copy.
+
+        Choose the type of content you need, describe your topic or product, pick a tone, and get AI-generated copy instantly.
+
+        This tool is useful for marketers, small business owners, and content creators who need quick, on-brand copy without hiring a copywriter for every piece.
+      `,
+},
+
+"resume-analyzer": {
+  title: "About AI Resume Analyzer",
+  content: `
+        AI Resume Analyzer is a free online tool that reviews your resume and gives AI-powered feedback on strengths, weaknesses, and specific improvements.
+
+        Paste your resume text, optionally add a job description to check keyword alignment, and get structured feedback covering overall impression, strengths, gaps, and actionable suggestions.
+
+        This tool is useful for job seekers preparing applications and wanting a second opinion before submitting their resume.
+      `,
+},
+
+"cover-letter-generator": {
+  title: "About AI Cover Letter Generator",
+  content: `
+        AI Cover Letter Generator is a free online tool that writes a personalized cover letter for any job application based on the role, company, and your key skills.
+
+        Enter the job title, company name, and your relevant skills or experience, choose a tone, and get a ready-to-edit cover letter instantly.
+
+        This tool is useful for job seekers who want a strong starting draft tailored to a specific position without staring at a blank page.
+      `,
+},
+
+"email-reply-generator": {
+  title: "About AI Email Reply Generator",
+  content: `
+        AI Email Reply Generator is a free online tool that drafts a ready-to-send reply to any email based on what you want to say and the tone you want.
+
+        Paste the email you received, describe what your reply should accomplish, choose a tone, and get a complete draft instantly.
+
+        This tool is useful for professionals who want to reply faster to emails while keeping their tone consistent and polished.
+      `,
+},
+
+"meeting-notes-summarizer": {
+  title: "About AI Meeting Notes Summarizer",
+  content: `
+        AI Meeting Notes Summarizer is a free online tool that turns a raw meeting transcript into an organized summary of key points, decisions, and action items.
+
+        Paste your meeting transcript or rough notes, and the AI will structure it into discussion points, decisions made, and action items with owners where mentioned.
+
+        This tool is useful for teams who want clean meeting notes without manually reviewing a long transcript after every call.
+      `,
+},
+
+"caption-generator": {
+  title: "About AI Caption & Hashtag Generator",
+  content: `
+        AI Caption & Hashtag Generator is a free online tool that creates catchy social media captions and relevant hashtags for your posts using AI.
+
+        Describe your post, choose a platform and tone, and get three caption options plus a ready-to-use set of hashtags instantly.
+
+        This tool is useful for content creators, small businesses, and social media managers who post regularly and want fresh, engaging captions without the writer's block.
+      `,
+},
+
+"slogan-generator": {
+  title: "About AI Slogan & Tagline Generator",
+  content: `
+        AI Slogan & Tagline Generator is a free online tool that creates catchy slogans and taglines for your business using AI.
+
+        Enter your business name and industry, choose a tone, and get 8 unique slogan options instantly to use on your branding, website, or ads.
+
+        This tool is useful for startups, small business owners, and marketers who want fresh tagline ideas without hiring a branding agency.
+      `,
+},
+
 
 };
 

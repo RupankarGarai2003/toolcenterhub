@@ -272,6 +272,339 @@ const toolFeatures = {
 ],
 
 
+  "emi-calculator": [
+    "Instant EMI calculation for any loan",
+    "Shows total interest and total payment",
+    "Works for home, car and personal loans",
+    "No signup or installation required",
+    "Accurate reducing-balance formula",
+    "Free and secure browser-based tool",
+  ],
+
+  "compound-interest-calculator": [
+    "Supports multiple compounding frequencies",
+    "Instant future value calculation",
+    "Shows total compound interest earned",
+    "Useful for investments and savings",
+    "No signup required",
+    "Accurate and fast calculations",
+  ],
+
+  "simple-interest-calculator": [
+    "Instant simple interest calculation",
+    "Shows total repayment amount",
+    "Works for loans and deposits",
+    "Simple and accurate formula",
+    "No installation required",
+    "Free and secure to use",
+  ],
+
+  "gst-calculator": [
+    "Add or remove GST instantly",
+    "Supports any GST percentage",
+    "Shows base amount and GST separately",
+    "Useful for invoices and billing",
+    "No signup required",
+    "Fast and accurate calculations",
+  ],
+
+  "sales-tax-calculator": [
+    "Instant sales tax calculation",
+    "Works with any tax rate",
+    "Shows tax amount and total price",
+    "Useful for shopping and invoicing",
+    "No signup required",
+    "Fast and accurate results",
+  ],
+
+  "discount-calculator": [
+    "Instant discount and savings calculation",
+    "Shows final discounted price",
+    "Works for any percentage discount",
+    "Useful for sales and shopping",
+    "No signup required",
+    "Fast and accurate results",
+  ],
+
+  "tip-calculator": [
+    "Instant tip calculation",
+    "Splits bill among multiple people",
+    "Works with any tip percentage",
+    "Useful for restaurants and group outings",
+    "No signup required",
+    "Fast and accurate results",
+  ],
+
+  "profit-margin-calculator": [
+    "Instant profit, margin and markup calculation",
+    "Useful for pricing products",
+    "Shows both margin and markup",
+    "Works for any currency",
+    "No signup required",
+    "Fast and accurate results",
+  ],
+
+  "break-even-calculator": [
+    "Instant break-even point calculation",
+    "Shows both units and revenue needed",
+    "Useful for new product planning",
+    "Works for any business type",
+    "No signup required",
+    "Fast and accurate results",
+  ],
+
+  "sip-calculator": [
+    "Instant SIP future value estimate",
+    "Shows invested amount vs estimated gains",
+    "Useful for long-term investment planning",
+    "Works for any monthly amount or duration",
+    "No signup required",
+    "Fast and accurate results",
+  ],
+
+  "mortgage-calculator": [
+    "Instant monthly mortgage payment estimate",
+    "Shows total interest over loan term",
+    "Works for any loan term or rate",
+    "Useful for comparing mortgage offers",
+    "No signup required",
+    "Fast and accurate results",
+  ],
+
+  "bmr-calculator": [
+    "Instant BMR calculation",
+    "Uses accurate Mifflin-St Jeor formula",
+    "Works for both men and women",
+    "Useful for diet and fitness planning",
+    "No signup required",
+    "Fast and accurate results",
+  ],
+
+  "calorie-calculator": [
+    "Instant daily calorie needs calculation",
+    "Accounts for activity level",
+    "Shows maintenance, loss and gain targets",
+    "Useful for diet and fitness planning",
+    "No signup required",
+    "Fast and accurate results",
+  ],
+
+  "body-fat-calculator": [
+    "Instant body fat percentage estimate",
+    "Uses the proven US Navy method",
+    "No calipers or special equipment needed",
+    "Works for both men and women",
+    "No signup required",
+    "Fast and private calculation",
+  ],
+
+  "ideal-weight-calculator": [
+    "Instant ideal weight estimate",
+    "Uses the established Devine formula",
+    "Works for both men and women",
+    "Useful as a general health reference",
+    "No signup required",
+    "Fast and private calculation",
+  ],
+
+  "gpa-calculator": [
+    "Instant weighted GPA calculation",
+    "Supports any number of courses",
+    "Shows total credit hours used",
+    "Useful for semester or cumulative GPA",
+    "No signup required",
+    "Fast and accurate results",
+  ],
+
+  "average-calculator": [
+    "Instant average, sum, min and max calculation",
+    "Works with any list of numbers",
+    "No spreadsheet needed",
+    "Useful for students and analysts",
+    "No signup required",
+    "Fast and accurate results",
+  ],
+
+  "percentage-change-calculator": [
+    "Instant percentage increase or decrease calculation",
+    "Clearly labels increase vs decrease",
+    "Works with positive or negative values",
+    "Useful for tracking growth or decline",
+    "No signup required",
+    "Fast and accurate results",
+  ],
+
+  "date-difference-calculator": [
+    "Instant date difference calculation",
+    "Shows years, months, days and total days",
+    "Automatically accounts for leap years",
+    "Useful for contracts and project planning",
+    "No signup required",
+    "Fast and accurate results",
+  ],
+
+  "time-duration-calculator": [
+    "Instant time duration calculation",
+    "Handles durations that cross midnight",
+    "Shows hours, minutes and total minutes",
+    "Useful for shift and work hour tracking",
+    "No signup required",
+    "Fast and accurate results",
+  ],
+
+  "length-converter": [
+    "Instant length unit conversion",
+    "Supports metric and imperial units",
+    "Handles decimals accurately",
+    "Useful for students and professionals",
+    "No signup required",
+    "Fast and accurate results",
+  ],
+
+  "weight-converter": [
+    "Instant weight unit conversion",
+    "Supports metric and imperial units",
+    "Handles decimals accurately",
+    "Useful for fitness, cooking, and shipping",
+    "No signup required",
+    "Fast and accurate results",
+  ],
+
+  "temperature-converter": [
+    "Instant temperature conversion",
+    "Supports Celsius, Fahrenheit and Kelvin",
+    "Handles negative values correctly",
+    "Useful for science, travel, and cooking",
+    "No signup required",
+    "Fast and accurate results",
+  ],
+
+  "grammar-checker": [
+    "Instant grammar and spell checking",
+    "Clear explanations for each issue",
+    "One-click apply all suggestions",
+    "No signup or word limit",
+    "Works directly in your browser",
+    "Free and fast results",
+  ],
+
+  "language-translator": [
+    "Instant translation between 12 languages",
+    "One-click language swap",
+    "No signup or installation required",
+    "Free to use with no hidden limits",
+    "Works directly in your browser",
+    "Fast and simple interface",
+  ],
+
+  "text-to-speech-converter": [
+    "Instant text-to-speech playback",
+    "Adjustable speed and pitch",
+    "Multiple voice options",
+    "No signup or installation required",
+    "Runs entirely in your browser",
+    "Free and private \u2014 text never leaves your device",
+  ],
+
+  "speech-to-text-converter": [
+    "Real-time speech-to-text transcription",
+    "No signup or installation required",
+    "Editable transcript output",
+    "One-click copy to clipboard",
+    "Works directly in your browser",
+    "Free and private microphone-based transcription",
+  ],
+
+  "text-summarizer": [
+    "AI-powered summarization",
+    "Adjustable summary length",
+    "Works for articles, essays, and reports",
+    "No signup required",
+    "Fast results",
+    "Free to use",
+  ],
+
+  "paraphrasing-tool": [
+    "AI-powered paraphrasing",
+    "Multiple tone options",
+    "Preserves original meaning",
+    "No signup required",
+    "Fast results",
+    "Free to use",
+  ],
+
+  "essay-generator": [
+    "AI-powered essay drafting",
+    "Adjustable length and tone",
+    "Clear structure with intro, body, conclusion",
+    "No signup required",
+    "Fast results",
+    "Free to use",
+  ],
+
+  "content-generator": [
+    "AI-powered marketing copy generation",
+    "Multiple content types in one tool",
+    "Adjustable tone",
+    "No signup required",
+    "Fast results",
+    "Free to use",
+  ],
+
+  "resume-analyzer": [
+    "AI-powered resume feedback",
+    "Optional job description matching",
+    "Covers strengths, gaps, and suggestions",
+    "No signup required",
+    "Fast results",
+    "Free to use",
+  ],
+
+  "cover-letter-generator": [
+    "AI-powered cover letter drafting",
+    "Tailored to job title and company",
+    "Adjustable tone",
+    "No signup required",
+    "Fast results",
+    "Free to use",
+  ],
+
+  "email-reply-generator": [
+    "AI-powered email reply drafting",
+    "Customizable intent and tone",
+    "Works for any email scenario",
+    "No signup required",
+    "Fast results",
+    "Free to use",
+  ],
+
+  "meeting-notes-summarizer": [
+    "AI-powered meeting summarization",
+    "Extracts decisions and action items",
+    "Works with transcripts or rough notes",
+    "No signup required",
+    "Fast results",
+    "Free to use",
+  ],
+
+  "caption-generator": [
+    "AI-powered caption and hashtag generation",
+    "Multiple caption options per request",
+    "Platform-specific tone matching",
+    "No signup required",
+    "Fast results",
+    "Free to use",
+  ],
+
+  "slogan-generator": [
+    "AI-powered slogan generation",
+    "8 unique options per request",
+    "Multiple tone choices",
+    "No signup required",
+    "Fast results",
+    "Free to use",
+  ],
+
 };
 
 export default function Features() {

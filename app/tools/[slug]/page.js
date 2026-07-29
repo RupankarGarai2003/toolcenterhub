@@ -360,6 +360,8 @@ export default async function Page({
   };
 
   const { verb, noun } = getToolCategory(toolData.name);
+  const isCalculator = toolData.category === "calculator";
+  const isTextTool = toolData.category === "text";
 
   const howToSchema = {
     "@context": "https://schema.org",
@@ -369,23 +371,59 @@ export default async function Page({
 
     description: toolData.description,
 
-    step: [
-      {
-        "@type": "HowToStep",
-        name: "Upload File",
-        text: `Upload your ${noun} to ${toolData.name}. Nothing is installed and no account is needed.`,
-      },
-      {
-        "@type": "HowToStep",
-        name: "Process File",
-        text: `Let the tool ${verb} your ${noun} automatically.`,
-      },
-      {
-        "@type": "HowToStep",
-        name: "Download Result",
-        text: "Download the finished file instantly to your device.",
-      },
-    ],
+    step: isCalculator
+      ? [
+          {
+            "@type": "HowToStep",
+            name: "Enter Your Values",
+            text: `Enter the required values into ${toolData.name}. No installation or account is needed.`,
+          },
+          {
+            "@type": "HowToStep",
+            name: "Calculate",
+            text: `Click Calculate to let the tool ${verb} your ${noun} automatically.`,
+          },
+          {
+            "@type": "HowToStep",
+            name: "View Result",
+            text: "View your result instantly, and copy it if needed.",
+          },
+        ]
+      : isTextTool
+      ? [
+          {
+            "@type": "HowToStep",
+            name: "Enter or Paste Text",
+            text: `Type or paste your text into ${toolData.name}. No installation or account is needed.`,
+          },
+          {
+            "@type": "HowToStep",
+            name: "Process Text",
+            text: `Let ${toolData.name} generate your result automatically using AI.`,
+          },
+          {
+            "@type": "HowToStep",
+            name: "Copy Result",
+            text: "Copy or download the result instantly.",
+          },
+        ]
+      : [
+          {
+            "@type": "HowToStep",
+            name: "Upload File",
+            text: `Upload your ${noun} to ${toolData.name}. Nothing is installed and no account is needed.`,
+          },
+          {
+            "@type": "HowToStep",
+            name: "Process File",
+            text: `Let the tool ${verb} your ${noun} automatically.`,
+          },
+          {
+            "@type": "HowToStep",
+            name: "Download Result",
+            text: "Download the finished file instantly to your device.",
+          },
+        ],
   };
   return (
     <>

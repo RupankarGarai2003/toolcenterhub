@@ -272,6 +272,339 @@ const toolBenefits = {
 ],
 
 
+  "emi-calculator": [
+    "Plan monthly budgets before taking a loan",
+    "Compare EMIs across different interest rates",
+    "Understand true cost of borrowing",
+    "Useful for financial planning and advisory",
+    "Avoid loan repayment surprises",
+    "Quick decision-making for loan tenure",
+  ],
+
+  "compound-interest-calculator": [
+    "Plan long-term investments confidently",
+    "Compare compounding frequencies easily",
+    "Understand true growth of savings",
+    "Useful for students learning finance",
+    "Helps choose between FD and RD options",
+    "Free browser-based calculation",
+  ],
+
+  "simple-interest-calculator": [
+    "Quickly estimate loan or deposit interest",
+    "Useful for students learning finance basics",
+    "Compare simple vs compound interest",
+    "Plan short-term savings goals",
+    "Fast, browser-based calculations",
+    "No account needed",
+  ],
+
+  "gst-calculator": [
+    "Simplifies GST-inclusive pricing",
+    "Helps verify invoice amounts",
+    "Useful for small business owners",
+    "Saves time on manual tax math",
+    "Works for any GST slab",
+    "Free and instant results",
+  ],
+
+  "sales-tax-calculator": [
+    "Helps estimate true checkout cost",
+    "Useful for budgeting purchases",
+    "Saves time on manual tax math",
+    "Works for any region's tax rate",
+    "Free and instant calculation",
+    "Simple, easy-to-use interface",
+  ],
+
+  "discount-calculator": [
+    "Helps compare sale prices quickly",
+    "Useful for budgeting purchases",
+    "Saves time on manual math",
+    "Works for retailers and shoppers alike",
+    "Free and instant calculation",
+    "Simple, easy-to-use interface",
+  ],
+
+  "tip-calculator": [
+    "Makes bill splitting fair and easy",
+    "Saves time doing mental math at the table",
+    "Useful for group dinners and events",
+    "Helps calculate appropriate tips",
+    "Free and instant calculation",
+    "Simple, easy-to-use interface",
+  ],
+
+  "profit-margin-calculator": [
+    "Helps set profitable selling prices",
+    "Useful for retail and e-commerce sellers",
+    "Clarifies margin vs markup confusion",
+    "Saves time on manual calculations",
+    "Free and instant results",
+    "Simple, easy-to-use interface",
+  ],
+
+  "break-even-calculator": [
+    "Helps validate new business ideas",
+    "Useful for pricing and cost planning",
+    "Clarifies how many sales are needed to profit",
+    "Saves time on manual financial math",
+    "Free and instant results",
+    "Simple, easy-to-use interface",
+  ],
+
+  "sip-calculator": [
+    "Helps plan long-term wealth creation",
+    "Useful for mutual fund investors",
+    "Clarifies power of compounding on SIPs",
+    "Saves time on manual projection math",
+    "Free and instant results",
+    "Simple, easy-to-use interface",
+  ],
+
+  "mortgage-calculator": [
+    "Helps plan home buying budgets",
+    "Useful for comparing loan terms",
+    "Clarifies true cost of a mortgage",
+    "Saves time on manual amortization math",
+    "Free and instant results",
+    "Simple, easy-to-use interface",
+  ],
+
+  "bmr-calculator": [
+    "Helps plan a calorie budget",
+    "Useful foundation for weight loss or gain goals",
+    "Clarifies your body's resting energy needs",
+    "Saves time compared to manual formulas",
+    "Free and instant results",
+    "Simple, easy-to-use interface",
+  ],
+
+  "calorie-calculator": [
+    "Helps plan a personalized diet",
+    "Useful for weight loss or muscle gain goals",
+    "Clarifies realistic daily calorie targets",
+    "Saves time compared to manual formulas",
+    "Free and instant results",
+    "Simple, easy-to-use interface",
+  ],
+
+  "body-fat-calculator": [
+    "Helps track body composition over time",
+    "Useful for fitness and health goals",
+    "No expensive equipment required",
+    "Clarifies progress beyond just body weight",
+    "Free and instant results",
+    "Simple, easy-to-use interface",
+  ],
+
+  "ideal-weight-calculator": [
+    "Provides a healthy weight reference point",
+    "Useful for fitness and diet planning",
+    "Simple alternative to complex weight charts",
+    "Helps set realistic health goals",
+    "Free and instant results",
+    "Simple, easy-to-use interface",
+  ],
+
+  "gpa-calculator": [
+    "Helps track academic performance",
+    "Useful for students and advisors",
+    "Saves time over manual GPA math",
+    "Works for any grading scale using grade points",
+    "Free and instant results",
+    "Simple, easy-to-use interface",
+  ],
+
+  "average-calculator": [
+    "Saves time over manual calculation",
+    "Useful for grading, statistics, and data review",
+    "Works directly in your browser",
+    "Handles large lists of numbers easily",
+    "Free and instant results",
+    "Simple, easy-to-use interface",
+  ],
+
+  "percentage-change-calculator": [
+    "Helps track price or sales changes over time",
+    "Useful for business and financial analysis",
+    "Saves time over manual percentage math",
+    "Clarifies trends between two data points",
+    "Free and instant results",
+    "Simple, easy-to-use interface",
+  ],
+
+  "date-difference-calculator": [
+    "Helps calculate exact durations quickly",
+    "Useful for legal, HR, and project timelines",
+    "Saves time over manual calendar counting",
+    "Clarifies exact days between milestones",
+    "Free and instant results",
+    "Simple, easy-to-use interface",
+  ],
+
+  "time-duration-calculator": [
+    "Helps calculate work or shift hours accurately",
+    "Useful for HR, payroll, and scheduling",
+    "Saves time over manual time math",
+    "Clarifies exact meeting or event durations",
+    "Free and instant results",
+    "Simple, easy-to-use interface",
+  ],
+
+  "length-converter": [
+    "Simplifies switching between measurement systems",
+    "Useful for travel, construction, and education",
+    "Saves time over manual conversion math",
+    "Works for both metric and imperial units",
+    "Free and instant results",
+    "Simple, easy-to-use interface",
+  ],
+
+  "weight-converter": [
+    "Simplifies switching between measurement systems",
+    "Useful for tracking fitness and diet goals",
+    "Saves time over manual conversion math",
+    "Works for both metric and imperial units",
+    "Free and instant results",
+    "Simple, easy-to-use interface",
+  ],
+
+  "temperature-converter": [
+    "Simplifies understanding weather and science data",
+    "Useful for students and travelers",
+    "Saves time over manual conversion formulas",
+    "Works across all three major temperature scales",
+    "Free and instant results",
+    "Simple, easy-to-use interface",
+  ],
+
+  "grammar-checker": [
+    "Helps you write more professionally",
+    "Catches mistakes before you hit send",
+    "Useful for essays, emails, and posts",
+    "Saves time over manual proofreading",
+    "Great for non-native English writers",
+    "Free and instant feedback",
+  ],
+
+  "language-translator": [
+    "Useful for travel, study, and work",
+    "Saves time compared to switching apps",
+    "Helps understand foreign-language text quickly",
+    "Great for quick everyday translations",
+    "Free and always accessible",
+    "Simple, easy-to-use interface",
+  ],
+
+  "text-to-speech-converter": [
+    "Useful for proofreading by listening",
+    "Great for accessibility needs",
+    "Helps multitask while consuming content",
+    "No app download required",
+    "Free and instantly available",
+    "Simple, easy-to-use interface",
+  ],
+
+  "speech-to-text-converter": [
+    "Great for hands-free note taking",
+    "Useful for quick voice memos and drafts",
+    "Saves time compared to manual typing",
+    "Helpful for accessibility needs",
+    "Free and instantly available",
+    "Simple, easy-to-use interface",
+  ],
+
+  "text-summarizer": [
+    "Saves time reading long documents",
+    "Helps with research and studying",
+    "Useful for quick content overviews",
+    "Great for professionals reviewing reports",
+    "Free and instant",
+    "Simple, easy-to-use interface",
+  ],
+
+  "paraphrasing-tool": [
+    "Helps avoid repetitive phrasing",
+    "Useful for rewording notes and drafts",
+    "Adjusts tone for different audiences",
+    "Saves time over manual rewriting",
+    "Free and instant",
+    "Simple, easy-to-use interface",
+  ],
+
+  "essay-generator": [
+    "Helps overcome writer's block",
+    "Useful for essay structure and brainstorming",
+    "Saves time drafting a first version",
+    "Great starting point for further editing",
+    "Free and instant",
+    "Simple, easy-to-use interface",
+  ],
+
+  "content-generator": [
+    "Saves time writing marketing copy",
+    "Useful for small businesses and marketers",
+    "Great starting draft for any campaign",
+    "No copywriter needed for quick content",
+    "Free and instant",
+    "Simple, easy-to-use interface",
+  ],
+
+  "resume-analyzer": [
+    "Helps improve resumes before applying",
+    "Useful second opinion for job seekers",
+    "Highlights keyword gaps against a job post",
+    "Saves cost of a professional resume review",
+    "Free and instant",
+    "Simple, easy-to-use interface",
+  ],
+
+  "cover-letter-generator": [
+    "Saves time writing cover letters",
+    "Helps tailor letters to each application",
+    "Useful starting draft for any job seeker",
+    "Reduces blank-page stress",
+    "Free and instant",
+    "Simple, easy-to-use interface",
+  ],
+
+  "email-reply-generator": [
+    "Saves time replying to emails",
+    "Helps maintain a consistent professional tone",
+    "Useful for tricky or sensitive replies",
+    "Reduces email-related stress",
+    "Free and instant",
+    "Simple, easy-to-use interface",
+  ],
+
+  "meeting-notes-summarizer": [
+    "Saves time writing up meeting notes",
+    "Ensures action items aren't forgotten",
+    "Useful for teams and project managers",
+    "Creates a shareable record of decisions",
+    "Free and instant",
+    "Simple, easy-to-use interface",
+  ],
+
+  "caption-generator": [
+    "Saves time writing social captions",
+    "Beats creative block for regular posters",
+    "Useful for businesses and influencers",
+    "Improves post engagement with better copy",
+    "Free and instant",
+    "Simple, easy-to-use interface",
+  ],
+
+  "slogan-generator": [
+    "Saves time brainstorming taglines",
+    "Useful for startups and small businesses",
+    "No branding agency needed for first ideas",
+    "Great for website, ads, and packaging copy",
+    "Free and instant",
+    "Simple, easy-to-use interface",
+  ],
+
 };
 
 export default function Benefits() {

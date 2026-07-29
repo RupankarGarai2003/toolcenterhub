@@ -41,6 +41,24 @@ export function getToolCategory(toolName = "") {
     };
   }
 
+  if (/(grammar|translat|speech|voice|paraphrase|summar)/.test(n)) {
+    return {
+      category: "text",
+      formats: "your text",
+      verb: "check, translate, or convert",
+      noun: "text",
+    };
+  }
+
+  if (/(calculator|converter|emi|gpa|gst|tax|interest|sip|mortgage|bmi|bmr|calorie|tip|discount|margin|break-even|age|percentage)/.test(n)) {
+    return {
+      category: "calculator",
+      formats: "your numbers",
+      verb: "calculate",
+      noun: "values",
+    };
+  }
+
   return {
     category: "general",
     formats: "your uploaded file",

@@ -29,6 +29,16 @@ import {
   LucideIcon,
   Activity,
   Calendar,
+  Languages,
+  Volume2,
+  Mic,
+  SpellCheck,
+  Wand2,
+  Mail,
+  Briefcase,
+  Users,
+  Hash,
+  Megaphone,
 } from "lucide-react";
 
 /* ICON MAP */
@@ -67,6 +77,20 @@ const iconMap: Record<string, LucideIcon> = {
   "word counter": Text,
   "bmi calculator": Activity,
   "age calculator": Calendar,
+  "grammar checker": SpellCheck,
+  "language translator": Languages,
+  "text to speech converter": Volume2,
+  "speech to text converter": Mic,
+  "ai text summarizer": FileText,
+  "ai paraphrasing tool": Wand2,
+  "ai essay generator": FileText,
+  "ai content generator": Wand2,
+  "ai resume analyzer": Briefcase,
+  "ai cover letter generator": Briefcase,
+  "ai email reply generator": Mail,
+  "ai meeting notes summarizer": Users,
+  "ai caption & hashtag generator": Hash,
+  "ai slogan & tagline generator": Megaphone,
 };
 
 function getCategory(tool: any) {
@@ -175,6 +199,7 @@ export default function Home() {
     { label: "PDF", value: "pdf" },
     { label: "Dev", value: "dev" },
     { label: "Calculator", value: "calculator" },
+    { label: "AI Tools", value: "text" },
     { label: "Utility", value: "tool" },
     { label: "⭐ User’s Choice", value: "choice" },
   ];
@@ -191,6 +216,7 @@ export default function Home() {
     { types: ["base"], color: "#75d545" },
     { types: ["qr"], color: "#412d3c" },
     { types: ["calculator"], color: "#10b981" },
+    { types: ["text"], color: "#6366f1" },
 
   ];
 
