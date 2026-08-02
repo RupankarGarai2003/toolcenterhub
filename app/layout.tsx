@@ -219,6 +219,14 @@ export default function RootLayout({
 
         <Footer />
 
+
+        {/* Google AdSense */}
+        <Script
+          async
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5475195663920811"
+        />
         {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-KTXCDXL76Y"
