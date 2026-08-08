@@ -1,7 +1,7 @@
 import { getVariantName } from "./toolVariants";
 
-export function getVariantContent(toolName, slug) {
-  const variant = getVariantName(slug);
+export function getVariantContent(toolName, slug, toolSlug = "") {
+  const variant = getVariantName(slug, toolSlug);
 
   if (!variant) return null;
 

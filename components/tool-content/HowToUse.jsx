@@ -744,7 +744,8 @@ export default function HowToUse() {
       <h2 className={styles.title}>
         {getVariantHowToTitle(
           toolName,
-          rawSlug
+          rawSlug,
+          currentSlug
         )}
       </h2>
 

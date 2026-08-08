@@ -180,14 +180,78 @@ decoder: "decoder",
 encoder: "encoder",
 "encoder-online": "encoder-online",
 "decode-url": "decode-url",
-"url-decoding": "url-decoding"
+"url-decoding": "url-decoding",
+
+/* CALCULATOR / CONVERTER / TEXT-AI VARIANTS */
+"home-loan": "home-loan",
+"car-loan": "car-loan",
+"personal-loan": "personal-loan",
+formula: "formula",
+monthly: "monthly",
+"in-months": "in-months",
+"in-days": "in-days",
+"in-weeks": "in-weeks",
+chart: "chart",
+"for-men": "for-men",
+"for-women": "for-women",
+tdee: "tdee",
+"for-weight-loss": "for-weight-loss",
+"for-muscle-gain": "for-muscle-gain",
+weighted: "weighted",
+college: "college",
+"high-school": "high-school",
+"30-year": "30-year",
+"15-year": "15-year",
+"with-taxes": "with-taxes",
+increase: "increase",
+decrease: "decrease",
+restaurant: "restaurant",
+"split-bill": "split-bill",
+markup: "markup",
+"percentage-off": "percentage-off",
+india: "india",
+"of-a-number": "of-a-number",
+"cm-to-inches": "cm-to-inches",
+"km-to-miles": "km-to-miles",
+"feet-to-meters": "feet-to-meters",
+"kg-to-lbs": "kg-to-lbs",
+"lbs-to-kg": "lbs-to-kg",
+"celsius-to-fahrenheit": "celsius-to-fahrenheit",
+"fahrenheit-to-celsius": "fahrenheit-to-celsius",
+"for-students": "for-students",
+"for-essays": "for-essays",
+"english-to-hindi": "english-to-hindi",
+"hindi-to-english": "hindi-to-english",
+"english-to-spanish": "english-to-spanish",
+"for-articles": "for-articles",
+"for-research-papers": "for-research-papers",
+"for-seo": "for-seo",
+"for-freshers": "for-freshers",
+"no-experience": "no-experience",
+"for-zoom": "for-zoom",
+ats: "ats",
+"for-business": "for-business"
 
 };
 
-/* Extract variant from slug */
+/* Extract variant from slug.
+   toolSlug (the matched base tool, e.g. "url-encoder") is stripped
+   from the front before matching, so a tool whose own name happens
+   to contain a generic keyword (url-enc"oder", base64-enc"oder",
+   resu"me"-analyzer, paraphrasing-"tool") doesn't self-match a
+   variant on its own base page — that previously produced doubled
+   headings like "URL Encoder Encoder". */
 
-export function getVariantName(slug = "") {
+export function getVariantName(slug = "", toolSlug = "") {
   const lowerSlug = slug.toLowerCase();
+  const lowerTool = toolSlug.toLowerCase();
+
+  const remainder =
+    lowerTool && lowerSlug.startsWith(lowerTool)
+      ? lowerSlug.slice(lowerTool.length)
+      : lowerSlug;
+
+  if (!remainder) return null;
 
   // Match longest variants first
   const variants = Object.entries(toolVariants).sort(
@@ -195,7 +259,7 @@ export function getVariantName(slug = "") {
   );
 
   for (const [key, value] of variants) {
-    if (lowerSlug.includes(key.toLowerCase())) {
+    if (remainder.includes(key.toLowerCase())) {
       return value;
     }
   }
@@ -205,10 +269,16 @@ export function getVariantName(slug = "") {
 
 /* Extract size target */
 
-export function getSizeVariant(slug = "") {
+export function getSizeVariant(slug = "", toolSlug = "") {
   const lowerSlug = slug.toLowerCase();
+  const lowerTool = toolSlug.toLowerCase();
 
-  const underKb = lowerSlug.match(/under-(\d+)kb/);
+  const remainder =
+    lowerTool && lowerSlug.startsWith(lowerTool)
+      ? lowerSlug.slice(lowerTool.length)
+      : lowerSlug;
+
+  const underKb = remainder.match(/under-(\d+)kb/);
   if (underKb) {
     return {
       type: "under",
@@ -217,7 +287,7 @@ export function getSizeVariant(slug = "") {
     };
   }
 
-  const underMb = lowerSlug.match(/under-(\d+)mb/);
+  const underMb = remainder.match(/under-(\d+)mb/);
   if (underMb) {
     return {
       type: "under",
@@ -226,7 +296,7 @@ export function getSizeVariant(slug = "") {
     };
   }
 
-  const toKb = lowerSlug.match(/to-(\d+)kb/);
+  const toKb = remainder.match(/to-(\d+)kb/);
   if (toKb) {
     return {
       type: "to",
@@ -235,7 +305,7 @@ export function getSizeVariant(slug = "") {
     };
   }
 
-  const toMb = lowerSlug.match(/to-(\d+)mb/);
+  const toMb = remainder.match(/to-(\d+)mb/);
   if (toMb) {
     return {
       type: "to",
@@ -244,7 +314,7 @@ export function getSizeVariant(slug = "") {
     };
   }
 
-  const kbMatch = lowerSlug.match(/(\d+)kb/);
+  const kbMatch = remainder.match(/(\d+)kb/);
   if (kbMatch) {
     return {
       type: "size",
@@ -253,7 +323,7 @@ export function getSizeVariant(slug = "") {
     };
   }
 
-  const mbMatch = lowerSlug.match(/(\d+)mb/);
+  const mbMatch = remainder.match(/(\d+)mb/);
   if (mbMatch) {
     return {
       type: "size",
@@ -267,9 +337,9 @@ export function getSizeVariant(slug = "") {
 
 /* Generate Dynamic Heading */
 
-export function getDynamicHeading(toolName, slug) {
-  const variant = getVariantName(slug);
-  const size = getSizeVariant(slug);
+export function getDynamicHeading(toolName, slug, toolSlug = "") {
+  const variant = getVariantName(slug, toolSlug);
+  const size = getSizeVariant(slug, toolSlug);
 
   if (size?.type === "under") {
     return `${toolName} Under ${size.value}${size.unit}`;

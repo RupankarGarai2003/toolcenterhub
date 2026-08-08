@@ -330,7 +330,7 @@ export default async function Page({
 
   /* Reuse the exact same FAQ content that FAQ.jsx renders on the page,
      so the schema never contradicts what a visitor (or Google) actually sees. */
-  const variantFaqs = getVariantFaqs(toolData.name, slug);
+  const variantFaqs = getVariantFaqs(toolData.name, slug, toolData.slug);
 
   const baseFaqs = [
     {
@@ -367,7 +367,7 @@ export default async function Page({
     "@context": "https://schema.org",
     "@type": "HowTo",
 
-    name: getVariantHowToTitle(toolData.name, slug),
+    name: getVariantHowToTitle(toolData.name, slug, toolData.slug),
 
     description: toolData.description,
 
@@ -482,7 +482,8 @@ export default async function Page({
         <ToolHeading
           title={getDynamicHeading(
             toolData.name,
-            slug
+            slug,
+            toolData.slug
           )}
           subtitle={toolData.description}
           gradient={true}

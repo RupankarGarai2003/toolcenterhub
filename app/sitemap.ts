@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { tools } from "@/lib/toolsList";
+import { blogDetails } from "@/lib/blogDetails";
 
 const toolSeoVariants: Record<
   string,
@@ -218,6 +219,59 @@ const toolSeoVariants: Record<
     "under-5mb", // GSC: 425 impressions — highest of any variant, real demand
     "for-youtube", // GSC: position 11.0
   ],
+
+  /* ============================================
+     CALCULATOR / CONVERTER / TEXT-AI VARIANTS
+     No GSC data exists for this batch — the earlier
+     variants above were scored against a real Search
+     Console export, these 35 tools weren't part of it.
+     These are based on well-established real-world query
+     patterns for each tool category (e.g. "home loan emi
+     calculator", "ats resume checker"), not GSC numbers.
+     Re-validate and prune against fresh Search Console
+     data once these have had time to be crawled/indexed —
+     see the "GSC pipeline" note in the audit report.
+     ============================================ */
+
+  "bmi-calculator": ["for-men", "for-women", "chart"],
+  "age-calculator": ["in-months", "in-days"],
+  "percentage-calculator": ["of-a-number"],
+
+  "emi-calculator": ["home-loan", "car-loan", "personal-loan"],
+  "compound-interest-calculator": ["monthly", "formula"],
+  "simple-interest-calculator": ["formula"],
+  "gst-calculator": ["india", "formula"],
+  "sales-tax-calculator": ["formula"],
+  "discount-calculator": ["percentage-off"],
+  "tip-calculator": ["restaurant", "split-bill"],
+  "profit-margin-calculator": ["markup", "formula"],
+  "break-even-calculator": ["formula"],
+  "sip-calculator": ["monthly", "formula"],
+  "mortgage-calculator": ["30-year", "15-year", "with-taxes"],
+
+  "bmr-calculator": ["for-men", "for-women"],
+  "calorie-calculator": ["tdee", "for-weight-loss", "for-muscle-gain"],
+  "body-fat-calculator": ["for-men", "for-women"],
+  "ideal-weight-calculator": ["for-men", "for-women"],
+  "gpa-calculator": ["weighted", "college", "high-school"],
+  "percentage-change-calculator": ["increase", "decrease"],
+  "date-difference-calculator": ["in-days", "in-weeks"],
+
+  "length-converter": ["cm-to-inches", "km-to-miles", "feet-to-meters"],
+  "weight-converter": ["kg-to-lbs", "lbs-to-kg"],
+  "temperature-converter": ["celsius-to-fahrenheit", "fahrenheit-to-celsius"],
+
+  "grammar-checker": ["for-students", "for-essays"],
+  "language-translator": ["english-to-hindi", "hindi-to-english", "english-to-spanish"],
+  "text-summarizer": ["for-articles", "for-research-papers"],
+  "paraphrasing-tool": ["for-essays", "for-seo"],
+  "essay-generator": ["for-students"],
+  "content-generator": ["for-instagram", "for-blog"],
+  "resume-analyzer": ["ats", "for-freshers"],
+  "cover-letter-generator": ["for-freshers", "no-experience"],
+  "meeting-notes-summarizer": ["for-zoom"],
+  "caption-generator": ["for-instagram", "for-tiktok"],
+  "slogan-generator": ["for-business"],
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -254,6 +308,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   );
 
+  const blogRoutes = Object.entries(blogDetails).map(
+    ([slug, post]) => ({
+      url: `${baseUrl}/blog/${slug}`,
+      lastModified: new Date(post.lastUpdated || post.date || Date.now()),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })
+  );
+
   return [
     {
       url: baseUrl,
@@ -264,6 +327,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
 
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+
     ...toolRoutes,
+    ...blogRoutes,
   ];
 }

@@ -576,6 +576,30 @@ const toolFAQs = {
   ],
 
 
+  "bmi-calculator": [
+    { q: "What is a healthy BMI range?", a: "A BMI between 18.5 and 24.9 is generally considered a healthy weight range for most adults." },
+    { q: "How is BMI calculated?", a: "BMI is calculated by dividing your weight in kilograms by the square of your height in meters." },
+    { q: "Does BMI account for muscle mass?", a: "No, BMI does not distinguish between muscle and fat, so very muscular individuals may show a higher BMI without excess body fat." },
+    { q: "Is BMI different for children?", a: "Yes, children and teens use age- and gender-specific BMI percentiles rather than the fixed adult ranges." },
+    { q: "Is the BMI Calculator free?", a: "Yes, it is completely free to use with no signup required." },
+  ],
+
+  "age-calculator": [
+    { q: "How is my exact age calculated?", a: "The tool calculates the difference between your date of birth and today (or a chosen end date) in years, months, and days." },
+    { q: "Does it account for leap years?", a: "Yes, since it uses actual calendar dates, leap years are automatically factored into the result." },
+    { q: "Can I calculate age as of a future or past date?", a: "Yes, you can choose any end date to calculate age or duration as of that date." },
+    { q: "Is this useful for eligibility checks?", a: "Yes, it's commonly used to verify age requirements for forms, exams, and applications." },
+    { q: "Is the Age Calculator free?", a: "Yes, it is completely free to use with no signup required." },
+  ],
+
+  "percentage-calculator": [
+    { q: "How do I calculate a percentage of a number?", a: "Enter the number and the percentage, and the tool instantly returns the calculated value." },
+    { q: "Can I calculate percentage increase or decrease?", a: "Yes, enter the original and new values to see the percentage change along with whether it's an increase or decrease." },
+    { q: "How do I find what percent one number is of another?", a: "Enter both numbers and the tool calculates what percentage the first is of the second." },
+    { q: "Is this useful for calculating discounts?", a: "Yes, it's commonly used to work out sale discounts, tips, and markups." },
+    { q: "Is the Percentage Calculator free?", a: "Yes, it is completely free to use with no signup required." },
+  ],
+
   "emi-calculator": [
     { q: "How is EMI calculated?", a: "EMI is calculated using the loan amount, monthly interest rate, and number of monthly installments with the standard reducing-balance EMI formula." },
     { q: "Does this work for any loan type?", a: "Yes, you can use it for home loans, car loans, personal loans, or any fixed-rate installment loan." },
@@ -893,7 +917,8 @@ export default function FAQ({
   const variantFaqs = rawSlug
     ? getVariantFaqs(
         currentSlug.replace(/-/g, " "),
-        rawSlug
+        rawSlug,
+        currentSlug
       )
     : [];
 

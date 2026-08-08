@@ -317,6 +317,30 @@ const relatedTools = {
     { name: "Average Calculator", slug: "average-calculator" },
   ],
 
+  "bmi-calculator": [
+    { name: "BMR Calculator", slug: "bmr-calculator" },
+    { name: "Calorie Calculator", slug: "calorie-calculator" },
+    { name: "Ideal Weight Calculator", slug: "ideal-weight-calculator" },
+    { name: "Body Fat Calculator", slug: "body-fat-calculator" },
+    { name: "Average Calculator", slug: "average-calculator" },
+  ],
+
+  "age-calculator": [
+    { name: "Date Difference Calculator", slug: "date-difference-calculator" },
+    { name: "Time Duration Calculator", slug: "time-duration-calculator" },
+    { name: "GPA Calculator", slug: "gpa-calculator" },
+    { name: "Percentage Calculator", slug: "percentage-calculator" },
+    { name: "Average Calculator", slug: "average-calculator" },
+  ],
+
+  "percentage-calculator": [
+    { name: "Percentage Change Calculator", slug: "percentage-change-calculator" },
+    { name: "Discount Calculator", slug: "discount-calculator" },
+    { name: "GPA Calculator", slug: "gpa-calculator" },
+    { name: "Average Calculator", slug: "average-calculator" },
+    { name: "GST Calculator", slug: "gst-calculator" },
+  ],
+
   "gpa-calculator": [
     { name: "Average Calculator", slug: "average-calculator" },
     { name: "Percentage Calculator", slug: "percentage-calculator" },

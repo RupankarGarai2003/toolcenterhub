@@ -362,6 +362,39 @@ const aboutContent = {
 },
 
 
+"bmi-calculator": {
+  title: "About BMI Calculator",
+  content: `
+      BMI Calculator is a free online tool that calculates your Body Mass Index from your height and weight, following the standard formula used by healthcare professionals worldwide.
+
+      Enter your height and weight to instantly see your BMI score along with the category it falls into — underweight, healthy weight, overweight, or obese — based on World Health Organization ranges.
+
+      This tool is useful as a quick health screening reference for tracking weight goals, though it does not account for muscle mass, bone density, or body composition.
+  `,
+},
+
+"age-calculator": {
+  title: "About Age Calculator",
+  content: `
+      Age Calculator is a free online tool that calculates your exact age in years, months, and days from your date of birth to today, or any two dates you choose.
+
+      Simply enter your date of birth to instantly see your precise age, useful for forms, eligibility checks, birthdays, and countdowns.
+
+      The calculator accounts for leap years automatically, so the result is always accurate down to the day.
+  `,
+},
+
+"percentage-calculator": {
+  title: "About Percentage Calculator",
+  content: `
+      Percentage Calculator is a free online tool that helps you calculate percentages instantly — find what percentage one number is of another, calculate a percentage of a value, or work out percentage increase and decrease.
+
+      Simply enter your values and get an accurate result immediately, without needing to do the math by hand.
+
+      This tool is useful for students, shoppers calculating discounts, and anyone who needs a quick, reliable percentage calculation.
+  `,
+},
+
 "emi-calculator": {
   title: "About EMI Calculator",
   content: `
@@ -794,7 +827,8 @@ const variantTool =
       "About ",
       ""
     ),
-    rawSlug
+    rawSlug,
+    currentSlug
   );
 
 const tool =

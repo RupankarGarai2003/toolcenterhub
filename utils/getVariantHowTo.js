@@ -2,8 +2,8 @@
 import { getVariantName } from "./toolVariants";
 import { getToolCategory } from "./toolCategory";
 
-export function getVariantHowToTitle(toolName, slug) {
-  const variant = getVariantName(slug);
+export function getVariantHowToTitle(toolName, slug, toolSlug = "") {
+  const variant = getVariantName(slug, toolSlug);
 
   if (!variant) {
     return `How to Use ${toolName} Online`;

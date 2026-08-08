@@ -1,5 +1,8 @@
 // utils/seo.js
 
+import { getVariantName, getSizeVariant } from "./toolVariants";
+import { getToolCategory } from "./toolCategory";
+
 function formatName(slug) {
   return slug
     ?.replace(/-/g, " ")
@@ -282,6 +285,24 @@ const customSeo = {
     keywords:
       "url decoder, decode url, url decoding tool",
   },
+  "bmi-calculator": {
+    title: "BMI Calculator Online Free - Calculate Body Mass Index",
+    description: "Calculate your Body Mass Index (BMI) online for free from your height and weight. Instantly see your BMI category and what it means for your health.",
+    keywords: "bmi calculator, body mass index calculator, calculate bmi online, bmi chart, healthy weight calculator",
+  },
+
+  "age-calculator": {
+    title: "Age Calculator Online Free - Calculate Your Exact Age",
+    description: "Calculate your exact age online for free in years, months and days from your date of birth. Fast, accurate and easy to use.",
+    keywords: "age calculator, calculate age online, date of birth calculator, exact age calculator, age in years months days",
+  },
+
+  "percentage-calculator": {
+    title: "Percentage Calculator Online Free - Calculate Percentages Instantly",
+    description: "Calculate percentages online for free — find a percentage of a number, what percent one number is of another, or percentage increase and decrease.",
+    keywords: "percentage calculator, calculate percentage online, percent of a number, percentage increase calculator, percentage decrease calculator",
+  },
+
   "emi-calculator": {
     title: "EMI Calculator Online Free - Calculate Loan EMI Instantly",
     description: "Calculate your loan EMI, total interest and total payment online for free. Works for home loans, car loans and personal loans.",
@@ -506,6 +527,82 @@ const customSeo = {
 
 };
 
+/* A handful of variant labels are acronyms that title-casing would
+   mangle (e.g. "ats" -> "Ats" instead of "ATS", a well-known term
+   with real search volume for resume tools). */
+const ACRONYM_LABELS = {
+  ats: "ATS",
+  tdee: "TDEE",
+};
+
+function formatVariantLabel(variant) {
+  if (ACRONYM_LABELS[variant]) return ACRONYM_LABELS[variant];
+
+  return variant
+    .replace(/^for-/, "")
+    .replace(/^under-/, "Under ")
+    .replace(/^to-/, "To ")
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+/* Generic fallback for the ~150+ long-tail variant slugs (sitemap.ts
+   toolSeoVariants) that don't have a hand-written entry above.
+   Without this, every one of those pages fell through to the same
+   customSeo[tool] title/description as the base tool page — a
+   duplicate-title problem across the majority of indexed variant
+   URLs. This mirrors the same variant-detection already used for
+   the on-page H1 (getDynamicHeading) and FAQ/HowTo schema, so the
+   <title>/<meta description> finally agree with what the page
+   actually shows. */
+function getGenericVariantSeo(tool, rawSlug) {
+  const variant = getVariantName(rawSlug, tool);
+  const size = getSizeVariant(rawSlug, tool);
+
+  if (!variant && !size) return null;
+
+  const name = formatName(tool);
+  const { verb, noun, formats } = getToolCategory(name);
+
+  if (size?.type === "under") {
+    const label = `Under ${size.value}${size.unit}`;
+    return {
+      title: `${name} Under ${size.value}${size.unit} Online Free`,
+      description: `${name} under ${size.value}${size.unit} online for free. Quickly ${verb} your ${noun} to meet upload limits for forms, portals, and email — no signup required.`,
+      keywords: `${tool} under ${size.value}${size.unit.toLowerCase()}, ${tool} ${label.toLowerCase()}, ${tool} online free`,
+    };
+  }
+
+  if (size?.type === "to") {
+    const label = `To ${size.value}${size.unit}`;
+    return {
+      title: `${name} To ${size.value}${size.unit} Online Free`,
+      description: `${name} to exactly ${size.value}${size.unit} online for free. Fast, accurate ${noun} sizing with no quality loss and no software install.`,
+      keywords: `${tool} to ${size.value}${size.unit.toLowerCase()}, ${tool} ${label.toLowerCase()}, ${tool} online free`,
+    };
+  }
+
+  if (variant) {
+    const label = formatVariantLabel(variant);
+
+    if (variant.startsWith("for-")) {
+      return {
+        title: `${name} For ${label} Online Free`,
+        description: `${name} for ${label} online for free. Get correctly sized, ready-to-upload results for ${label} in seconds — no signup required.`,
+        keywords: `${tool} for ${label.toLowerCase()}, ${name.toLowerCase()} ${label.toLowerCase()}, ${tool} online free`,
+      };
+    }
+
+    return {
+      title: `${name} ${label} Online Free`,
+      description: `${name} ${label} online for free. Use our ${noun} tool to ${verb} in seconds, directly in your browser, with support for ${formats}.`,
+      keywords: `${tool} ${label.toLowerCase()}, ${name.toLowerCase()} ${label.toLowerCase()}, ${tool} online free`,
+    };
+  }
+
+  return null;
+}
+
 export function getSeoData(
   tool,
   limit,
@@ -648,7 +745,27 @@ export function getSeoData(
     };
   }
 
-  /* CUSTOM TOOL SEO */
+  /* CUSTOM TOOL SEO — only for the exact base tool URL.
+     A variant slug (e.g. image-resizer-passport-photo) must NOT
+     reuse the base tool's title/description, or every unhandled
+     variant becomes a duplicate of /tools/image-resizer. */
+
+  if (customSeo[tool] && slug === tool) {
+    return customSeo[tool];
+  }
+
+  /* GENERIC VARIANT SEO — covers every long-tail slug in
+     sitemap.ts's toolSeoVariants that isn't hand-written above. */
+
+  const genericVariantSeo = getGenericVariantSeo(tool, rawSlug);
+
+  if (genericVariantSeo) {
+    return genericVariantSeo;
+  }
+
+  /* If it's the base tool but had no custom entry, still prefer
+     customSeo when available (covers slug !== tool edge cases,
+     e.g. trailing slash or casing differences). */
 
   if (customSeo[tool]) {
     return customSeo[tool];

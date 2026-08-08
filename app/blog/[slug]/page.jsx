@@ -5,6 +5,91 @@ import { blogDetails } from "@/lib/blogDetails";
 import { tools } from "@/lib/toolsList";
 import { blogs } from "@/lib/blogs";
 
+const SITE_URL = "https://toolscenterhub.com";
+
+/* Convert display dates like "July 30, 2026" into ISO 8601
+   for OpenGraph/schema, since Google rejects non-ISO dates
+   for rich results. Falls back to the raw string if unparsable. */
+function toIsoDate(value) {
+  if (!value) return undefined;
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? value : parsed.toISOString();
+}
+
+/* ===========================
+   SEO METADATA (per post)
+=========================== */
+
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const blog = blogDetails[slug];
+
+  if (!blog) {
+    return { title: "Blog Not Found" };
+  }
+
+  const url = `${SITE_URL}/blog/${slug}`;
+  const ogImage = blog.image?.startsWith("http")
+    ? blog.image
+    : `${SITE_URL}${blog.image}`;
+
+  return {
+    title: blog.metaTitle || blog.title,
+    description: blog.metaDescription,
+    keywords: Array.isArray(blog.keywords)
+      ? blog.keywords.join(", ")
+      : blog.keywords,
+
+    alternates: {
+      canonical: url,
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true },
+    },
+
+    openGraph: {
+      title: blog.metaTitle || blog.title,
+      description: blog.metaDescription,
+      url,
+      siteName: "ToolsCenterHub",
+      type: "article",
+      publishedTime: toIsoDate(blog.date),
+      modifiedTime: toIsoDate(blog.lastUpdated || blog.date),
+      authors: [blog.author],
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: blog.title,
+        },
+      ],
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title: blog.metaTitle || blog.title,
+      description: blog.metaDescription,
+      images: [ogImage],
+    },
+  };
+}
+
+/* ===========================
+   STATIC PARAMS (pre-render + reliable indexing)
+=========================== */
+
+export function generateStaticParams() {
+  return Object.keys(blogDetails).map((slug) => ({ slug }));
+}
+
+/* ===========================
+   PAGE
+=========================== */
+
 export default async function BlogDetails({ params }) {
   const { slug } = await params;
 
@@ -22,8 +107,97 @@ export default async function BlogDetails({ params }) {
     blog.relatedBlogs.includes(item.slug)
   );
 
+  const url = `${SITE_URL}/blog/${slug}`;
+  const ogImage = blog.image?.startsWith("http")
+    ? blog.image
+    : `${SITE_URL}${blog.image}`;
+
+  /* BlogPosting Schema */
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: blog.title,
+    description: blog.metaDescription,
+    image: ogImage,
+    author: {
+      "@type": "Organization",
+      name: blog.author,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "ToolsCenterHub",
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/favicon.ico`,
+      },
+    },
+    datePublished: toIsoDate(blog.date),
+    dateModified: toIsoDate(blog.lastUpdated || blog.date),
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": url,
+    },
+  };
+
+  /* Breadcrumb Schema */
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
+      { "@type": "ListItem", position: 3, name: blog.title, item: url },
+    ],
+  };
+
+  /* FAQ Schema (reuses the exact FAQs rendered below) */
+  const faqSchema =
+    blog.faq?.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: blog.faq.map((f) => ({
+            "@type": "Question",
+            name: f.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: f.answer,
+            },
+          })),
+        }
+      : null;
+
   return (
     <div className="max-w-4xl mx-auto px-5 py-10">
+
+      {/* BlogPosting Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+
+      {/* Breadcrumb Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
+      {/* FAQ Schema */}
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
+
+      {/* Breadcrumb (visible) */}
+      <nav className="text-sm text-gray-500 mb-6" aria-label="Breadcrumb">
+        <Link href="/" className="hover:text-blue-600">Home</Link>
+        <span className="mx-2">/</span>
+        <Link href="/blog" className="hover:text-blue-600">Blog</Link>
+        <span className="mx-2">/</span>
+        <span className="text-gray-700">{blog.title}</span>
+      </nav>
 
       {/* Title */}
       <h1 className="text-4xl font-bold mb-4">
