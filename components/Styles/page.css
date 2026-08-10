@@ -70,6 +70,12 @@
     border: none;
 }
 
+.tab-active:hover {
+  background: linear-gradient(to right, #4f46e5, #9333ea);
+  color: #fff;
+  border: none;
+}
+
 
 /* GRID */
 .grid {

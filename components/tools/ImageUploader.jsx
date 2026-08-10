@@ -1,6 +1,9 @@
 "use client";
 import { Upload, X, Image as ImageIcon } from "lucide-react";
 import styles from "../Styles/ImageUploader.module.css";
+import Image from "next/image";
+import { CiLock } from "react-icons/ci";
+import { VscFilePdf } from "react-icons/vsc";
 
 export default function ImageUploader({
   preview,
@@ -64,11 +67,18 @@ export default function ImageUploader({
             {/* Preview */}
             <div className={styles.imageWrapper}>
               {isImage && preview ? (
-                <img src={preview} alt="Preview" className={styles.image} />
+                <Image
+                  src={preview}
+                  alt="Preview"
+                  width={500}
+                  height={300}
+                  unoptimized
+                  className={styles.image}
+                />
               ) : (
                 <div className="flex flex-col items-center justify-center h-40 text-gray-600">
                   <span className="text-4xl">
-                    {fileData?.name?.endsWith(".pdf") ? "📕" : "📄"}
+                    {fileData?.name?.endsWith(".pdf") ? <><VscFilePdf /></> : "📄"}
                   </span>
                   <p className="text-xs mt-2">{fileData?.name}</p>
                 </div>
@@ -83,9 +93,7 @@ export default function ImageUploader({
             <div className={styles.info}>
               <div className={styles.fileCard}>
                 <p className={styles.labelText}>Filename</p>
-                <p className={styles.fileName}>
-                  {fileData?.name || "Unknown"}
-                </p>
+                <p className={styles.fileName}>{fileData?.name || "Unknown"}</p>
               </div>
 
               <div className={styles.grid}>
@@ -114,14 +122,13 @@ export default function ImageUploader({
         </div>
       )}
 
-
       {/* Security Note */}
-      <div className="mt-4 bg-blue-50 px-4 py-2 rounded-lg text-center">
-        <p className="text-xs text-green-700">
-          🔒 End-to-end encryption keeps your files fully secure.
+      <div className="mt-4 bg-blue-50 px-4 py-2 rounded-lg text-center flex items-center justify-center gap-2">
+        <CiLock className="text-gray-600 text-lg shrink-0 stroke-1" />
+        <p className="text-xs text-gray-700 font-medium ">
+          End-to-end encryption keeps your files fully secure.
         </p>
       </div>
-
     </div>
   );
 }

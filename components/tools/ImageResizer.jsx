@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  useState,
-  useEffect,
-  useRef,
-} from "react";
+import { useState, useEffect, useRef } from "react";
 
 import ImageUploader from "./ImageUploader";
 
@@ -22,46 +18,35 @@ import Features from "@/components/tool-content/Features";
 import Benefits from "@/components/tool-content/Benefits";
 import FAQ from "@/components/tool-content/FAQ";
 import RelatedTools from "@/components/tool-content/RelatedTools";
+import { CiLock, CiUnlock } from "react-icons/ci";
 
 export default function ImageResizer() {
-  const [preview, setPreview] =
-    useState(null);
+  const [preview, setPreview] = useState(null);
 
-  const [resized, setResized] =
-    useState(null);
+  const [resized, setResized] = useState(null);
 
-  const [loading, setLoading] =
-    useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const [fileData, setFileData] =
-    useState(null);
+  const [fileData, setFileData] = useState(null);
 
-  const [width, setWidth] =
-    useState("");
+  const [width, setWidth] = useState("");
 
-  const [height, setHeight] =
-    useState("");
+  const [height, setHeight] = useState("");
 
-  const [percent, setPercent] =
-    useState(100);
+  const [percent, setPercent] = useState(100);
 
-  const [lockRatio, setLockRatio] =
-    useState(true);
+  const [lockRatio, setLockRatio] = useState(true);
 
-  const [format, setFormat] =
-    useState("image/jpeg");
+  const [format, setFormat] = useState("image/jpeg");
 
-  const [quality, setQuality] =
-    useState(0.8);
+  const [quality, setQuality] = useState(0.8);
 
-  const [original, setOriginal] =
-    useState({
-      w: 0,
-      h: 0,
-    });
+  const [original, setOriginal] = useState({
+    w: 0,
+    h: 0,
+  });
 
-  const [estimatedSize, setEstimatedSize] =
-    useState(null);
+  const [estimatedSize, setEstimatedSize] = useState(null);
 
   const imageRef = useRef(null);
 
@@ -76,33 +61,19 @@ export default function ImageResizer() {
 
   /* HANDLE FILE */
   const handleChange = (e) => {
-    const selected =
-      e.target.files?.[0];
+    const selected = e.target.files?.[0];
 
-    if (
-      !selected ||
-      !selected.type.startsWith(
-        "image/"
-      )
-    ) {
+    if (!selected || !selected.type.startsWith("image/")) {
       return;
     }
 
-    if (
-      selected.size >
-      20 * 1024 * 1024
-    ) {
-      alert(
-        "Maximum image size is 20MB"
-      );
+    if (selected.size > 20 * 1024 * 1024) {
+      alert("Maximum image size is 20MB");
 
       return;
     }
 
-    const url =
-      URL.createObjectURL(
-        selected
-      );
+    const url = URL.createObjectURL(selected);
 
     const img = new Image();
 
@@ -127,11 +98,7 @@ export default function ImageResizer() {
       setFileData({
         name: selected.name,
 
-        size:
-          (
-            selected.size / 1024
-          ).toFixed(1) +
-          " KB",
+        size: (selected.size / 1024).toFixed(1) + " KB",
 
         width: img.width,
 
@@ -146,8 +113,7 @@ export default function ImageResizer() {
   const handleDrop = (e) => {
     e.preventDefault();
 
-    const selected =
-      e.dataTransfer.files?.[0];
+    const selected = e.dataTransfer.files?.[0];
 
     if (!selected) return;
 
@@ -185,19 +151,12 @@ export default function ImageResizer() {
   const handleWidth = (val) => {
     setWidth(val);
 
-    setPercent(
-      Math.round(
-        (val / original.w) * 100
-      )
-    );
+    setPercent(Math.round((val / original.w) * 100));
 
     if (lockRatio) {
-      const ratio =
-        original.h / original.w;
+      const ratio = original.h / original.w;
 
-      setHeight(
-        Math.round(val * ratio)
-      );
+      setHeight(Math.round(val * ratio));
     }
   };
 
@@ -205,19 +164,12 @@ export default function ImageResizer() {
   const handleHeight = (val) => {
     setHeight(val);
 
-    setPercent(
-      Math.round(
-        (val / original.h) * 100
-      )
-    );
+    setPercent(Math.round((val / original.h) * 100));
 
     if (lockRatio) {
-      const ratio =
-        original.w / original.h;
+      const ratio = original.w / original.h;
 
-      setWidth(
-        Math.round(val * ratio)
-      );
+      setWidth(Math.round(val * ratio));
     }
   };
 
@@ -225,11 +177,9 @@ export default function ImageResizer() {
   const handlePercent = (val) => {
     setPercent(val);
 
-    const w =
-      (original.w * val) / 100;
+    const w = (original.w * val) / 100;
 
-    const h =
-      (original.h * val) / 100;
+    const h = (original.h * val) / 100;
 
     setWidth(Math.round(w));
 
@@ -238,91 +188,46 @@ export default function ImageResizer() {
 
   /* LIVE ESTIMATE */
   useEffect(() => {
-    if (
-      !preview ||
-      !width ||
-      !height
-    ) {
+    if (!preview || !width || !height) {
       return;
     }
 
-    const timeout = setTimeout(
-      () => {
-        const img =
-          imageRef.current;
+    const timeout = setTimeout(() => {
+      const img = imageRef.current;
 
-        if (!img) return;
+      if (!img) return;
 
-        const canvas =
-          document.createElement(
-            "canvas"
-          );
+      const canvas = document.createElement("canvas");
 
-        canvas.width = width;
+      canvas.width = width;
 
-        canvas.height = height;
+      canvas.height = height;
 
-        const ctx =
-          canvas.getContext("2d");
+      const ctx = canvas.getContext("2d");
 
-        ctx.imageSmoothingEnabled =
-          true;
+      ctx.imageSmoothingEnabled = true;
 
-        ctx.imageSmoothingQuality =
-          "high";
+      ctx.imageSmoothingQuality = "high";
 
-        ctx.drawImage(
-          img,
-          0,
-          0,
-          width,
-          height
-        );
+      ctx.drawImage(img, 0, 0, width, height);
 
-        const data =
-          format ===
-            "image/jpeg" ||
-            format ===
-            "image/webp"
-            ? canvas.toDataURL(
-              format,
-              quality
-            )
-            : canvas.toDataURL(
-              format
-            );
+      const data =
+        format === "image/jpeg" || format === "image/webp"
+          ? canvas.toDataURL(format, quality)
+          : canvas.toDataURL(format);
 
-        const size =
-          Math.round(
-            (data.length * 3) /
-            4 /
-            1024
-          );
+      const size = Math.round((data.length * 3) / 4 / 1024);
 
-        setEstimatedSize(size);
-      },
-      200
-    );
+      setEstimatedSize(size);
+    }, 200);
 
-    return () =>
-      clearTimeout(timeout);
-  }, [
-    width,
-    height,
-    quality,
-    format,
-    preview,
-  ]);
+    return () => clearTimeout(timeout);
+  }, [width, height, quality, format, preview]);
 
   /* RESIZE */
   const handleResize = async () => {
-    if (
-      width < 1 ||
-      height < 1
-    ) {
-      alert(
-        "Invalid dimensions"
-      );
+    if (width < 1 || height < 1) {
+      alert("Invalid dimensions");
 
       return;
     }
@@ -330,58 +235,30 @@ export default function ImageResizer() {
     try {
       setLoading(true);
 
-      const img =
-        imageRef.current;
+      const img = imageRef.current;
 
-      const canvas =
-        document.createElement(
-          "canvas"
-        );
+      const canvas = document.createElement("canvas");
 
       canvas.width = width;
 
       canvas.height = height;
 
-      const ctx =
-        canvas.getContext("2d");
+      const ctx = canvas.getContext("2d");
 
-      ctx.imageSmoothingEnabled =
-        true;
+      ctx.imageSmoothingEnabled = true;
 
-      ctx.imageSmoothingQuality =
-        "high";
+      ctx.imageSmoothingQuality = "high";
 
-      ctx.drawImage(
-        img,
-        0,
-        0,
-        width,
-        height
-      );
+      ctx.drawImage(img, 0, 0, width, height);
 
       const result =
-        format ===
-          "image/jpeg" ||
-          format ===
-          "image/webp"
-          ? canvas.toDataURL(
-            format,
-            quality
-          )
-          : canvas.toDataURL(
-            format
-          );
+        format === "image/jpeg" || format === "image/webp"
+          ? canvas.toDataURL(format, quality)
+          : canvas.toDataURL(format);
 
-      const finalSize =
-        Math.round(
-          (result.length * 3) /
-          4 /
-          1024
-        );
+      const finalSize = Math.round((result.length * 3) / 4 / 1024);
 
-      setEstimatedSize(
-        finalSize
-      );
+      setEstimatedSize(finalSize);
 
       setResized(result);
     } finally {
@@ -393,13 +270,9 @@ export default function ImageResizer() {
   const handleDownload = () => {
     if (!resized) return;
 
-    const ext =
-      format.split("/")[1];
+    const ext = format.split("/")[1];
 
-    const link =
-      document.createElement(
-        "a"
-      );
+    const link = document.createElement("a");
 
     link.href = resized;
 
@@ -411,19 +284,14 @@ export default function ImageResizer() {
   return (
     <>
       <div className="max-w-md mx-auto space-y-8">
-
         {/* UPLOADER */}
         <ImageUploader
           preview={preview}
           fileData={fileData}
           onChange={handleChange}
           onDrop={handleDrop}
-          onDragOver={
-            handleDragOver
-          }
-          onRemove={
-            handleRemove
-          }
+          onDragOver={handleDragOver}
+          onRemove={handleRemove}
         />
 
         {/* ORIGINAL */}
@@ -437,18 +305,11 @@ export default function ImageResizer() {
               p-4
             "
           >
-
             <div className="flex items-center justify-between mb-4">
-
               <div>
+                <h3 className="font-bold text-gray-800">Original Image</h3>
 
-                <h3 className="font-bold text-gray-800">
-                  Original Image
-                </h3>
-
-                <p className="text-xs text-gray-400">
-                  Preview before resizing
-                </p>
+                <p className="text-xs text-gray-400">Preview before resizing</p>
               </div>
 
               <div
@@ -458,8 +319,7 @@ export default function ImageResizer() {
                   text-xs font-semibold
                 "
               >
-                {original.w} ×{" "}
-                {original.h}
+                {original.w} × {original.h}
               </div>
             </div>
 
@@ -498,35 +358,24 @@ export default function ImageResizer() {
               space-y-7
             "
           >
-
             {/* HEADER */}
             <div className="text-center">
-
               <h2 className="text-xl font-black text-gray-800">
                 Resize Settings
               </h2>
 
               <p className="text-sm text-gray-400 mt-1">
-                Customize dimensions
-                and output quality
+                Customize dimensions and output quality
               </p>
             </div>
 
             {/* DIMENSIONS */}
             <div>
-
               <div className="flex items-center justify-between mb-3">
-
-                <p className="font-semibold text-gray-700">
-                  Dimensions
-                </p>
+                <p className="font-semibold text-gray-700">Dimensions</p>
 
                 <button
-                  onClick={() =>
-                    setLockRatio(
-                      !lockRatio
-                    )
-                  }
+                  onClick={() => setLockRatio(!lockRatio)}
                   className="
                     px-3 py-1 rounded-full
                     bg-gray-100
@@ -535,30 +384,30 @@ export default function ImageResizer() {
                     transition-all
                   "
                 >
-                  {lockRatio
-                    ? "🔒 Locked"
-                    : "🔓 Free"}
+                  <button className="flex items-center justify-center gap-1 ">
+                    {lockRatio ? (
+                      <>
+                        <CiLock className="text-lg stroke-1 text-gray-700" />
+                        <span className="text-gray-700">Lock</span>
+                      </>
+                    ) : (
+                      <>
+                        <CiUnlock className="text-lg stroke-1 text-gray-700" bold/>
+                        <span className="text-gray-700">Free</span>
+                      </>
+                    )}
+                  </button>
                 </button>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-
                 <div>
-
-                  <p className="text-xs text-gray-400 mb-2">
-                    Width
-                  </p>
+                  <p className="text-xs text-gray-400 mb-2">Width</p>
 
                   <input
                     type="number"
                     value={width}
-                    onChange={(e) =>
-                      handleWidth(
-                        Number(
-                          e.target.value
-                        )
-                      )
-                    }
+                    onChange={(e) => handleWidth(Number(e.target.value))}
                     className="
                       w-full h-12
                       rounded-2xl
@@ -573,21 +422,12 @@ export default function ImageResizer() {
                 </div>
 
                 <div>
-
-                  <p className="text-xs text-gray-400 mb-2">
-                    Height
-                  </p>
+                  <p className="text-xs text-gray-400 mb-2">Height</p>
 
                   <input
                     type="number"
                     value={height}
-                    onChange={(e) =>
-                      handleHeight(
-                        Number(
-                          e.target.value
-                        )
-                      )
-                    }
+                    onChange={(e) => handleHeight(Number(e.target.value))}
                     className="
                       w-full h-12
                       rounded-2xl
@@ -605,16 +445,10 @@ export default function ImageResizer() {
 
             {/* SCALE */}
             <div>
-
               <div className="flex justify-between mb-2">
+                <p className="font-semibold text-gray-700">Resize Scale</p>
 
-                <p className="font-semibold text-gray-700">
-                  Resize Scale
-                </p>
-
-                <p className="text-blue-600 font-bold">
-                  {percent}%
-                </p>
+                <p className="text-blue-600 font-bold">{percent}%</p>
               </div>
 
               <input
@@ -622,13 +456,7 @@ export default function ImageResizer() {
                 min="10"
                 max="200"
                 value={percent}
-                onChange={(e) =>
-                  handlePercent(
-                    Number(
-                      e.target.value
-                    )
-                  )
-                }
+                onChange={(e) => handlePercent(Number(e.target.value))}
                 className="
                   w-full
                   accent-blue-600
@@ -638,18 +466,11 @@ export default function ImageResizer() {
 
             {/* FORMAT */}
             <div>
-
-              <p className="font-semibold text-gray-700 mb-3">
-                Output Format
-              </p>
+              <p className="font-semibold text-gray-700 mb-3">Output Format</p>
 
               <select
                 value={format}
-                onChange={(e) =>
-                  setFormat(
-                    e.target.value
-                  )
-                }
+                onChange={(e) => setFormat(e.target.value)}
                 className="
                   w-full h-12
                   rounded-2xl
@@ -661,34 +482,21 @@ export default function ImageResizer() {
                   focus:border-blue-400
                 "
               >
-                <option value="image/jpeg">
-                  JPG
-                </option>
+                <option value="image/jpeg">JPG</option>
 
-                <option value="image/png">
-                  PNG
-                </option>
+                <option value="image/png">PNG</option>
 
-                <option value="image/webp">
-                  WEBP
-                </option>
+                <option value="image/webp">WEBP</option>
               </select>
             </div>
 
             {/* QUALITY */}
             <div>
-
               <div className="flex justify-between mb-2">
-
-                <p className="font-semibold text-gray-700">
-                  Quality
-                </p>
+                <p className="font-semibold text-gray-700">Quality</p>
 
                 <p className="text-blue-600 font-bold">
-                  {Math.round(
-                    quality * 100
-                  )}
-                  %
+                  {Math.round(quality * 100)}%
                 </p>
               </div>
 
@@ -698,13 +506,7 @@ export default function ImageResizer() {
                 max="1"
                 step="0.05"
                 value={quality}
-                onChange={(e) =>
-                  setQuality(
-                    Number(
-                      e.target.value
-                    )
-                  )
-                }
+                onChange={(e) => setQuality(Number(e.target.value))}
                 className="
                   w-full
                   accent-blue-600
@@ -718,7 +520,6 @@ export default function ImageResizer() {
                 grid grid-cols-3 gap-3
               "
             >
-
               <div
                 className="
                   bg-gray-50
@@ -726,14 +527,9 @@ export default function ImageResizer() {
                   p-3 text-center
                 "
               >
+                <p className="text-xs text-gray-400">Original</p>
 
-                <p className="text-xs text-gray-400">
-                  Original
-                </p>
-
-                <p className="font-bold text-sm mt-1">
-                  {fileData?.size}
-                </p>
+                <p className="font-bold text-sm mt-1">{fileData?.size}</p>
               </div>
 
               <div
@@ -743,15 +539,10 @@ export default function ImageResizer() {
                   p-3 text-center
                 "
               >
-
-                <p className="text-xs text-blue-400">
-                  Estimated
-                </p>
+                <p className="text-xs text-blue-400">Estimated</p>
 
                 <p className="font-bold text-sm text-blue-600 mt-1">
-                  {estimatedSize ??
-                    "-"}{" "}
-                  KB
+                  {estimatedSize ?? "-"} KB
                 </p>
               </div>
 
@@ -762,23 +553,17 @@ export default function ImageResizer() {
                   p-3 text-center
                 "
               >
-
-                <p className="text-xs text-gray-400">
-                  Resolution
-                </p>
+                <p className="text-xs text-gray-400">Resolution</p>
 
                 <p className="font-bold text-sm mt-1">
-                  {width}×
-                  {height}
+                  {width}×{height}
                 </p>
               </div>
             </div>
 
             {/* BUTTON */}
             <button
-              onClick={
-                handleResize
-              }
+              onClick={handleResize}
               disabled={loading}
               className="
                 w-full h-14
@@ -811,7 +596,6 @@ export default function ImageResizer() {
         {/* RESULT */}
         {resized && (
           <div className="space-y-6">
-
             {/* SUCCESS */}
             <div
               className="
@@ -826,7 +610,6 @@ export default function ImageResizer() {
 
             {/* BEFORE AFTER */}
             <div className="grid grid-cols-1 gap-5">
-
               {/* BEFORE */}
               <div
                 className="
@@ -837,12 +620,8 @@ export default function ImageResizer() {
                   shadow-[0_10px_40px_rgba(0,0,0,0.05)]
                 "
               >
-
                 <div className="flex items-center justify-between mb-3">
-
-                  <p className="font-semibold text-gray-700">
-                    Before
-                  </p>
+                  <p className="font-semibold text-gray-700">Before</p>
 
                   <div
                     className="
@@ -885,12 +664,8 @@ export default function ImageResizer() {
                   shadow-[0_10px_40px_rgba(59,130,246,0.12)]
                 "
               >
-
                 <div className="flex items-center justify-between mb-3">
-
-                  <p className="font-semibold text-blue-600">
-                    After
-                  </p>
+                  <p className="font-semibold text-blue-600">After</p>
 
                   <div
                     className="
@@ -926,12 +701,9 @@ export default function ImageResizer() {
 
             {/* ACTIONS */}
             <div className="flex gap-4">
-
               {/* RESET */}
               <button
-                onClick={
-                  handleRemove
-                }
+                onClick={handleRemove}
                 className="
                   w-full
                   h-12
@@ -951,9 +723,7 @@ export default function ImageResizer() {
 
               {/* DOWNLOAD */}
               <button
-                onClick={
-                  handleDownload
-                }
+                onClick={handleDownload}
                 className="
                   w-full
                   h-12
@@ -976,13 +746,11 @@ export default function ImageResizer() {
             </div>
           </div>
         )}
-
-
       </div>
 
       {/* CONTENT */}
       <div className="contentWrapper">
-        <RelatedTools/>
+        <RelatedTools />
         <About />
         <HowToUse />
         <Features />
