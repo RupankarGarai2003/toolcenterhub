@@ -10,6 +10,7 @@ import {
   Shield,
   Download,
   RotateCcw,
+  Zap,
 } from "lucide-react";
 
 import About from "@/components/tool-content/About";
@@ -18,6 +19,8 @@ import Features from "@/components/tool-content/Features";
 import Benefits from "@/components/tool-content/Benefits";
 import FAQ from "@/components/tool-content/FAQ";
 import RelatedTools from "@/components/tool-content/RelatedTools";
+import CustomButton from "../tools/CustomButton";
+
 import { CiLock, CiUnlock } from "react-icons/ci";
 
 export default function ImageResizer() {
@@ -145,6 +148,10 @@ export default function ImageResizer() {
     setEstimatedSize(null);
 
     setLoading(false);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   /* WIDTH */
@@ -392,7 +399,10 @@ export default function ImageResizer() {
                       </>
                     ) : (
                       <>
-                        <CiUnlock className="text-lg stroke-1 text-gray-700" bold/>
+                        <CiUnlock
+                          className="text-lg stroke-1 text-gray-700"
+                          bold
+                        />
                         <span className="text-gray-700">Free</span>
                       </>
                     )}
@@ -562,34 +572,18 @@ export default function ImageResizer() {
             </div>
 
             {/* BUTTON */}
-            <button
+            <CustomButton
               onClick={handleResize}
+              loading={loading}
               disabled={loading}
-              className="
-                w-full h-14
-                rounded-2xl
-                bg-gradient-to-r
-                from-blue-600
-                to-cyan-500
-                text-white
-                font-bold
-                shadow-xl shadow-blue-500/20
-                hover:scale-[1.02]
-                active:scale-[0.98]
-                transition-all duration-300
-                disabled:opacity-50
-                flex items-center justify-center gap-2
-              "
+              leftIcon={<Zap size={18} strokeWidth={2.5} />}
+              animation="ripple"
+              btnSize="lg"
+              variant="primary"
+              fullWidth
             >
-              {loading ? (
-                <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  Resizing...
-                </>
-              ) : (
-                "Resize Image"
-              )}
-            </button>
+              {loading ? "Resizing..." : "Resize Image"}
+            </CustomButton>
           </div>
         )}
 
@@ -700,49 +694,21 @@ export default function ImageResizer() {
             </div>
 
             {/* ACTIONS */}
-            <div className="flex gap-4">
-              {/* RESET */}
-              <button
+            <div className="flex gap-4 justify-center align-middle">
+              <CustomButton
                 onClick={handleRemove}
-                className="
-                  w-full
-                  h-12
-                  rounded-2xl
-                  border border-gray-300
-                  bg-white
-                  text-gray-700
-                  font-semibold
-                  hover:bg-gray-50
-                  transition-all
-                  flex items-center justify-center gap-2
-                "
+                leftIcon={<RotateCcw size={18} strokeWidth={2.5} />}
+                animation="ripple"
+                btnSize="md"
               >
-                <RotateCcw className="w-4 h-4" />
                 Reset
-              </button>
+              </CustomButton>
 
-              {/* DOWNLOAD */}
-              <button
+              <CustomButton
+                variant="download"
                 onClick={handleDownload}
-                className="
-                  w-full
-                  h-12
-                  rounded-2xl
-                  bg-gradient-to-r
-                  from-emerald-500
-                  to-green-600
-                  text-white
-                  font-semibold
-                  shadow-lg shadow-green-500/20
-                  hover:scale-[1.02]
-                  active:scale-[0.98]
-                  transition-all
-                  flex items-center justify-center gap-2
-                "
-              >
-                <Download className="w-4 h-4" />
-                Download
-              </button>
+                animation="bounce"
+              />
             </div>
           </div>
         )}
