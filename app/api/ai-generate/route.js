@@ -90,12 +90,35 @@ Resume:
 ${jobDescription ? `\nJob Description:\n"""${jobDescription}"""` : ""}
   `,
 
-  "cover-letter-generator": ({ jobTitle, company, keySkills, tone = "professional" }) => `
+"cover-letter-generator": ({
+  jobTitle,
+  company,
+  keySkills,
+  tone = "professional",
+  targetWords = 300,
+}) => `
 Write a ${tone} cover letter for a "${jobTitle}" position at "${company}".
-Highlight these skills/experience naturally: ${keySkills}.
-Keep it to 3-4 paragraphs, no placeholder brackets like [Your Name] except at the very top and bottom for name/date.
-Return ONLY the cover letter text.
-  `,
+
+Highlight these skills/experience naturally:
+${keySkills}
+
+Length requirement:
+- Target approximately ${targetWords} words.
+- Stay as close as reasonably possible to ${targetWords} words.
+- Never produce fewer than 200 words.
+- Never exceed 400 words.
+- Do not add repetitive or meaningless content just to reach the target.
+
+Structure:
+- Write 3-4 well-written paragraphs.
+- Keep the writing professional, natural, and specific to the job.
+- Do not use bullet points.
+- Do not add unnecessary headings.
+- Do not use placeholder brackets such as [Your Name].
+- Return ONLY the cover letter text.
+
+The final cover letter should be approximately ${targetWords} words.
+`,
 
   "email-reply-generator": ({ originalEmail, intent, tone = "professional" }) => `
 Write a ${tone} email reply to the message below. The reply should: ${intent}.

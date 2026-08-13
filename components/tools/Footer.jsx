@@ -44,10 +44,31 @@ export default function Footer() {
         <div className="footer-col">
           <h4>Contact</h4>
 
-          <p><MapPin size={14} /> India</p>
-          <p><Mail size={14} /> support@toolscenterhub.com</p>
-          <p><Phone size={14} /> +91 8391808784</p>
-          <p><Phone size={14} /> +91 7679109146</p>
+          <p>
+            <MapPin size={14} />
+            India
+          </p>
+
+          <p>
+            <Mail size={14} />
+            <a href="mailto:support@toolscenterhub.com">
+              support@toolscenterhub.com
+            </a>
+          </p>
+
+          <p>
+            <Phone size={14} />
+            <a href="tel:+918391808784">
+              +91 8391808784
+            </a>
+          </p>
+
+          <p>
+            <Phone size={14} />
+            <a href="tel:+917679109146">
+              +91 7679109146
+            </a>
+          </p>
         </div>
 
       </div>

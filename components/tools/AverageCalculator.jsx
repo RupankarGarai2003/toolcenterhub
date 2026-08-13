@@ -29,7 +29,7 @@ export default function AverageCalculator() {
       min: Math.min(...nums),
       max: Math.max(...nums),
     });
-  
+
   };
 
   const copyToClipboard = async () => {
@@ -54,7 +54,8 @@ export default function AverageCalculator() {
               Numbers (comma separated)
             </label>
             <input
-              type="number"
+              type="text"
+              inputMode="decimal"
               value={numbers}
               onChange={(e) => setNumbers(e.target.value)}
               placeholder="e.g. 12, 45, 67, 23, 89"

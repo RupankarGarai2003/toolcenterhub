@@ -43,7 +43,7 @@ export default function ImageResizer() {
   const [format, setFormat] = useState("image/jpeg");
 
   const [quality, setQuality] = useState(0.8);
-
+  const [targetSize, setTargetSize] = useState("40");
   const [original, setOriginal] = useState({
     w: 0,
     h: 0,
@@ -231,11 +231,58 @@ export default function ImageResizer() {
     return () => clearTimeout(timeout);
   }, [width, height, quality, format, preview]);
 
+
+  const compressToTargetSize = (canvas, mimeType, targetKB) => {
+    const targetBytes = targetKB * 1024;
+
+    let low = 0.05;
+    let high = 1;
+    let bestData = null;
+    let bestSize = Infinity;
+
+    for (let i = 0; i < 10; i++) {
+      const quality = (low + high) / 2;
+
+      const dataUrl = canvas.toDataURL(mimeType, quality);
+
+      const base64Length = dataUrl.split(",")[1].length;
+      const size = Math.round((base64Length * 3) / 4);
+
+      const difference = Math.abs(size - targetBytes);
+
+      if (difference < Math.abs(bestSize - targetBytes)) {
+        bestData = dataUrl;
+        bestSize = size;
+      }
+
+      if (size > targetBytes) {
+        high = quality;
+      } else {
+        low = quality;
+      }
+    }
+
+    return {
+      dataUrl: bestData,
+      size: Math.round(bestSize / 1024),
+    };
+  };
   /* RESIZE */
   const handleResize = async () => {
     if (width < 1 || height < 1) {
       alert("Invalid dimensions");
+      return;
+    }
 
+    const targetKB = Number(targetSize);
+
+    if (!targetSize || !Number.isFinite(targetKB) || targetKB < 1) {
+      alert("Please enter a valid target file size.");
+      return;
+    }
+
+    if (targetKB > 10240) {
+      alert("Target file size cannot exceed 10 MB.");
       return;
     }
 
@@ -258,15 +305,27 @@ export default function ImageResizer() {
 
       ctx.drawImage(img, 0, 0, width, height);
 
-      const result =
-        format === "image/jpeg" || format === "image/webp"
-          ? canvas.toDataURL(format, quality)
-          : canvas.toDataURL(format);
+      let result;
+      let finalSize;
 
-      const finalSize = Math.round((result.length * 3) / 4 / 1024);
+      if (format === "image/jpeg" || format === "image/webp") {
+        const compressed = compressToTargetSize(
+          canvas,
+          format,
+          targetSize
+        );
+
+        result = compressed.dataUrl;
+        finalSize = compressed.size;
+      } else {
+        result = canvas.toDataURL(format);
+
+        finalSize = Math.round(
+          (result.split(",")[1].length * 3) / 4 / 1024
+        );
+      }
 
       setEstimatedSize(finalSize);
-
       setResized(result);
     } finally {
       setLoading(false);
@@ -301,57 +360,7 @@ export default function ImageResizer() {
           onRemove={handleRemove}
         />
 
-        {/* ORIGINAL */}
-        {preview && !resized && (
-          <div
-            className="
-              bg-white
-              rounded-[28px]
-              border border-gray-100
-              shadow-[0_10px_40px_rgba(0,0,0,0.05)]
-              p-4
-            "
-          >
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h3 className="font-bold text-gray-800">Original Image</h3>
 
-                <p className="text-xs text-gray-400">Preview before resizing</p>
-              </div>
-
-              <div
-                className="
-                  px-3 py-1 rounded-full
-                  bg-blue-50 text-blue-600
-                  text-xs font-semibold
-                "
-              >
-                {original.w} × {original.h}
-              </div>
-            </div>
-
-            <div
-              className="
-                bg-gradient-to-br
-                from-gray-50
-                to-gray-100
-                rounded-2xl
-                overflow-hidden
-                flex items-center justify-center
-                min-h-[220px]
-              "
-            >
-              <img
-                src={preview}
-                className="
-                  max-h-[240px]
-                  object-contain
-                  rounded-xl
-                "
-              />
-            </div>
-          </div>
-        )}
 
         {/* SETTINGS */}
         {preview && !resized && (
@@ -500,76 +509,71 @@ export default function ImageResizer() {
               </select>
             </div>
 
-            {/* QUALITY */}
+
+            {/* TARGET FILE SIZE */}
             <div>
               <div className="flex justify-between mb-2">
-                <p className="font-semibold text-gray-700">Quality</p>
+                <p className="font-semibold text-gray-700">
+                  Target File Size
+                </p>
 
                 <p className="text-blue-600 font-bold">
-                  {Math.round(quality * 100)}%
+                  KB
                 </p>
               </div>
 
-              <input
-                type="range"
-                min="0.1"
-                max="1"
-                step="0.05"
-                value={quality}
-                onChange={(e) => setQuality(Number(e.target.value))}
-                className="
-                  w-full
-                  accent-blue-600
-                "
-              />
+              <div className="flex items-center gap-3">
+                <input
+                  type="number"
+                  min="1"
+                  max="10240"
+                  value={targetSize}
+                  onChange={(e) => {
+                    const value = e.target.value;
+
+                    // Allow the user to completely clear the field
+                    if (value === "") {
+                      setTargetSize("");
+                      return;
+                    }
+
+                    const numericValue = Number(value);
+
+                    // Don't allow values above 10 MB
+                    if (numericValue > 10240) {
+                      setTargetSize("10240");
+                      return;
+                    }
+
+                    setTargetSize(value);
+                  }}
+                  placeholder="e.g. 40"
+                  className="
+                    w-full h-12
+                    rounded-2xl
+                    border border-gray-200
+                    px-4
+                    outline-none
+                    focus:ring-4
+                    focus:ring-blue-100
+                    focus:border-blue-400
+                  "
+                />
+
+                <span className="text-sm font-semibold text-gray-500">
+                  KB
+                </span>
+              </div>
+
+
+              <p className="text-xs text-gray-400 mt-2">
+                Best results for JPG and WebP. PNG size depends mainly on image dimensions.
+              </p>
             </div>
+
 
             {/* STATS */}
-            <div
-              className="
-                grid grid-cols-3 gap-3
-              "
-            >
-              <div
-                className="
-                  bg-gray-50
-                  rounded-2xl
-                  p-3 text-center
-                "
-              >
-                <p className="text-xs text-gray-400">Original</p>
 
-                <p className="font-bold text-sm mt-1">{fileData?.size}</p>
-              </div>
-
-              <div
-                className="
-                  bg-blue-50
-                  rounded-2xl
-                  p-3 text-center
-                "
-              >
-                <p className="text-xs text-blue-400">Estimated</p>
-
-                <p className="font-bold text-sm text-blue-600 mt-1">
-                  {estimatedSize ?? "-"} KB
-                </p>
-              </div>
-
-              <div
-                className="
-                  bg-gray-50
-                  rounded-2xl
-                  p-3 text-center
-                "
-              >
-                <p className="text-xs text-gray-400">Resolution</p>
-
-                <p className="font-bold text-sm mt-1">
-                  {width}×{height}
-                </p>
-              </div>
-            </div>
 
             {/* BUTTON */}
             <CustomButton

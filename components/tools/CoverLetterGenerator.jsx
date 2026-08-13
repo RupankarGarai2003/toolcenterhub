@@ -10,15 +10,33 @@ import Benefits from "@/components/tool-content/Benefits";
 import FAQ from "@/components/tool-content/FAQ";
 import RelatedTools from "@/components/tool-content/RelatedTools";
 
+const LENGTH_OPTIONS = [
+  { value: 200, label: "Minimum (~200 words)" },
+  { value: 300, label: "Recommended (250–350 words)" },
+  { value: 400, label: "Maximum (~400 words)" },
+];
+
 export default function CoverLetterGenerator() {
   const [jobTitle, setJobTitle] = useState("");
   const [company, setCompany] = useState("");
   const [keySkills, setKeySkills] = useState("");
   const [tone, setTone] = useState("professional");
+  const [targetWords, setTargetWords] = useState(300);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
+
+
+  const getWordCount = (text) => {
+  if (!text?.trim()) return 0;
+
+  return text
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .length;
+};
 
   const generate = async () => {
     if (!jobTitle.trim() || !company.trim() || !keySkills.trim()) return;
@@ -32,7 +50,7 @@ export default function CoverLetterGenerator() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           tool: "cover-letter-generator",
-          inputs: { jobTitle, company, keySkills, tone },
+          inputs: { jobTitle, company, keySkills, tone, targetWords },
         }),
       });
 
@@ -63,6 +81,7 @@ export default function CoverLetterGenerator() {
     setCompany("");
     setKeySkills("");
     setTone("professional");
+    setTargetWords(300);
     setResult(null);
     setError("");
   };
@@ -128,6 +147,23 @@ export default function CoverLetterGenerator() {
 
           <div className="mb-5">
             <label className="block text-sm font-medium text-gray-800 mb-2">
+              Cover Letter Length
+            </label>
+            <select
+              value={targetWords}
+              onChange={(e) => setTargetWords(Number(e.target.value))}
+              className="w-full rounded-xl border border-gray-300 p-4 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+            >
+              {LENGTH_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="mb-5">
+            <label className="block text-sm font-medium text-gray-800 mb-2">
               Result
             </label>
             <div className="rounded-xl border border-gray-300 bg-gray-50 p-5 min-h-[100px]">
@@ -142,7 +178,12 @@ export default function CoverLetterGenerator() {
                   {error}
                 </div>
               ) : result ? (
-                <p className="text-gray-800 whitespace-pre-wrap">{result}</p>
+                <>
+                  <p className="text-gray-800 whitespace-pre-wrap">{result}</p>
+                  <p className="mt-3 text-xs text-gray-500 text-right">
+                    Word count: {getWordCount(result)}
+                  </p>
+                </>
               ) : (
                 <p className="text-gray-400">
                   Result will appear here...

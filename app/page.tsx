@@ -1,6 +1,6 @@
 "use client";
 import FAQ from "@/components/tool-content/FAQ";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { tools } from "@/lib/toolsList";
 import "../components/Styles/page.css"
@@ -119,7 +119,25 @@ function getCategory(tool: any) {
 }
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState("all");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const category = searchParams.get("category");
+
+  const validTabs = [
+    "all",
+    "image",
+    "pdf",
+    "dev",
+    "calculator",
+    "text",
+    "tool",
+    "choice",
+  ];
+
+  const activeTab = validTabs.includes(category || "")
+    ? category!
+    : "all";
 
   const homeFaqs = [
     {
@@ -250,7 +268,13 @@ export default function Home() {
         {tabs.map((tab) => (
           <button
             key={tab.value}
-            onClick={() => setActiveTab(tab.value)}
+            onClick={() => {
+              if (tab.value === "all") {
+                router.replace("/");
+              } else {
+                router.replace(`/?category=${tab.value}`);
+              }
+            }}
             className={`tab-btn ${activeTab === tab.value ? "tab-active" : ""
               }`}
           >

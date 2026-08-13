@@ -17,6 +17,8 @@ import RelatedTools from "@/components/tool-content/RelatedTools";
 export default function BMICalculator() {
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
+  const [heightError, setHeightError] = useState("");
+  const [weightError, setWeightError] = useState("");
   const [bmi, setBMI] = useState("");
   const [status, setStatus] = useState("");
   const [copied, setCopied] = useState(false);
@@ -25,7 +27,28 @@ export default function BMICalculator() {
     const h = parseFloat(height);
     const w = parseFloat(weight);
 
-    if (!h || !w || h <= 0 || w <= 0) {
+    let valid = true;
+
+    setHeightError("");
+    setWeightError("");
+
+    if (!height.trim()) {
+      setHeightError("Please enter your height.");
+      valid = false;
+    } else if (!Number.isFinite(h) || h < 10 || h > 300) {
+      setHeightError("Height must be between 10 and 300 cm.");
+      valid = false;
+    }
+
+    if (!weight.trim()) {
+      setWeightError("Please enter your weight.");
+      valid = false;
+    } else if (!Number.isFinite(w) || w < 2 || w > 500) {
+      setWeightError("Weight must be between 2 and 500 kg.");
+      valid = false;
+    }
+
+    if (!valid) {
       setBMI("");
       setStatus("");
       return;
@@ -64,12 +87,14 @@ export default function BMICalculator() {
     }, 1500);
   };
 
-  const resetFields = () => {
-    setHeight("");
-    setWeight("");
-    setBMI("");
-    setStatus("");
-  };
+const resetFields = () => {
+  setHeight("");
+  setWeight("");
+  setBMI("");
+  setStatus("");
+  setHeightError("");
+  setWeightError("");
+};
 
   return (
     <>
@@ -86,9 +111,18 @@ export default function BMICalculator() {
               type="number"
               placeholder="Enter your height"
               value={height}
-              onChange={(e) => setHeight(e.target.value)}
+              onChange={(e) => {
+                setHeight(e.target.value);
+                setHeightError("");
+              }}
               className="w-full rounded-xl border border-gray-300 p-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
             />
+
+            {heightError && (
+              <p className="mt-2 text-sm text-red-500">
+                {heightError}
+              </p>
+            )}
           </div>
 
           {/* Weight */}
@@ -101,9 +135,18 @@ export default function BMICalculator() {
               type="number"
               placeholder="Enter your weight"
               value={weight}
-              onChange={(e) => setWeight(e.target.value)}
+              onChange={(e) => {
+                setWeight(e.target.value);
+                setWeightError("");
+              }}
               className="w-full rounded-xl border border-gray-300 p-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
             />
+
+            {weightError && (
+              <p className="mt-2 text-sm text-red-500">
+                {weightError}
+              </p>
+            )}
           </div>
 
           {/* Result */}

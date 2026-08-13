@@ -31,7 +31,7 @@ export default function GPACalculator() {
     if (totalCredits === 0) { setResult(null); return; }
     const gpa = totalPoints / totalCredits;
     setResult({ gpa: gpa.toFixed(2), totalCredits: totalCredits.toFixed(1) });
-  
+
   };
 
   const copyToClipboard = async () => {
@@ -57,7 +57,8 @@ export default function GPACalculator() {
               Grade Points (comma separated)
             </label>
             <input
-              type="number"
+              type="text"
+              inputMode="decimal"
               value={grades}
               onChange={(e) => setGrades(e.target.value)}
               placeholder="e.g. 4,3.7,3.3,4"
@@ -70,7 +71,8 @@ export default function GPACalculator() {
               Credit Hours (comma separated)
             </label>
             <input
-              type="number"
+              type="text"
+              inputMode="decimal"
               value={credits}
               onChange={(e) => setCredits(e.target.value)}
               placeholder="e.g. 3,4,3,2"

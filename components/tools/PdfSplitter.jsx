@@ -53,54 +53,55 @@ const formatBytes = (bytes) => {
   );
 };
 
-const parseRanges = (
-  input,
-  maxPages
-) => {
+const parseRangeGroups = (input, maxPages) => {
   const parts = input
     .split(",")
     .map((p) => p.trim())
     .filter(Boolean);
 
-  const pages = new Set();
+  const groups = [];
 
   for (const part of parts) {
     if (part.includes("-")) {
-      const [a, b] = part
-        .split("-")
-        .map(Number);
+      const [start, end] = part.split("-").map(Number);
 
       if (
-        isNaN(a) ||
-        isNaN(b)
+        Number.isNaN(start) ||
+        Number.isNaN(end) ||
+        start < 1 ||
+        end > maxPages ||
+        start > end
       ) {
         continue;
       }
 
-      for (let i = a; i <= b; i++) {
-        if (
-          i >= 1 &&
-          i <= maxPages
-        ) {
-          pages.add(i);
-        }
+      const pages = [];
+
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
       }
+
+      groups.push({
+        label: `${start}-${end}`,
+        pages,
+      });
     } else {
-      const n = parseInt(part);
+      const page = Number(part);
 
       if (
-        !isNaN(n) &&
-        n >= 1 &&
-        n <= maxPages
+        !Number.isNaN(page) &&
+        page >= 1 &&
+        page <= maxPages
       ) {
-        pages.add(n);
+        groups.push({
+          label: `${page}`,
+          pages: [page],
+        });
       }
     }
   }
 
-  return Array.from(pages).sort(
-    (a, b) => a - b
-  );
+  return groups;
 };
 
 export default function PDFSplitter() {
@@ -128,12 +129,13 @@ export default function PDFSplitter() {
   const [results, setResults] =
     useState([]);
 
+  const [combinedResult, setCombinedResult] = useState(null);
   const [success, setSuccess] =
     useState(false);
 
   /* PARSED PAGES */
-  const parsedPages = useMemo(() => {
-    return parseRanges(
+  const parsedGroups = useMemo(() => {
+    return parseRangeGroups(
       ranges,
       pageCount
     );
@@ -144,6 +146,10 @@ export default function PDFSplitter() {
     results.forEach((r) => {
       URL.revokeObjectURL(r.url);
     });
+
+    if (combinedResult?.url) {
+      URL.revokeObjectURL(combinedResult.url);
+    }
   };
 
   /* AUTO CLEANUP */
@@ -221,7 +227,7 @@ export default function PDFSplitter() {
 
     setRanges(value);
 
-    const parsed = parseRanges(
+    const parsed = parseRangeGroups(
       value,
       pageCount
     );
@@ -259,167 +265,169 @@ export default function PDFSplitter() {
 
     try {
       setLoading(true);
-
       setProgress(0);
-
       setSuccess(false);
 
-      const bytes =
-        await file.arrayBuffer();
+      const bytes = await file.arrayBuffer();
+      const pdf = await PDFDocument.load(bytes);
 
-      const pdf =
-        await PDFDocument.load(bytes);
+      const cleanName = file.name.replace(/\.pdf$/i, "");
 
-      const cleanName =
-        file.name.replace(
-          /\.pdf$/i,
-          ""
-        );
+      let groups = [];
 
-      let outputs = [];
-
-      /* EACH PAGE */
+      /*
+       * EACH PAGE
+       * Example: 10-page PDF
+       * => 10 separate PDF files
+       */
       if (mode === "each") {
-        for (
-          let i = 0;
-          i < pdf.getPageCount();
-          i++
-        ) {
-          const newPdf =
-            await PDFDocument.create();
-
-          const [page] =
-            await newPdf.copyPages(
-              pdf,
-              [i]
-            );
-
-          newPdf.addPage(page);
-
-          const pdfBytes =
-            await newPdf.save();
-
-          const blob =
-            new Blob([pdfBytes], {
-              type: "application/pdf",
-            });
-
-          outputs.push({
-            url:
-              URL.createObjectURL(
-                blob
-              ),
-
-            blob,
-
-            name:
-              cleanName +
-              "_page_" +
-              (i + 1) +
-              ".pdf",
-
-            size: blob.size,
+        for (let i = 1; i <= pdf.getPageCount(); i++) {
+          groups.push({
+            label: `${i}`,
+            pages: [i],
           });
-
-          setProgress(
-            ((i + 1) /
-              pdf.getPageCount()) *
-            100
-          );
         }
       }
 
-      /* CUSTOM / ODD / EVEN */
-      else {
-        let pages = [];
-
-        if (mode === "ranges") {
-          pages = parseRanges(
-            ranges,
-            pdf.getPageCount()
-          );
-
-          if (!pages.length) {
-            setRangeError(
-              "Invalid page range"
-            );
-
-            setLoading(false);
-
-            return;
-          }
-        }
-
-        if (mode === "odd") {
-          for (
-            let i = 1;
-            i <= pdf.getPageCount();
-            i++
-          ) {
-            if (i % 2 !== 0) {
-              pages.push(i);
-            }
-          }
-        }
-
-        if (mode === "even") {
-          for (
-            let i = 1;
-            i <= pdf.getPageCount();
-            i++
-          ) {
-            if (i % 2 === 0) {
-              pages.push(i);
-            }
-          }
-        }
-
-        const newPdf =
-          await PDFDocument.create();
-
-        const copied =
-          await newPdf.copyPages(
-            pdf,
-            pages.map(
-              (p) => p - 1
-            )
-          );
-
-        copied.forEach((p) =>
-          newPdf.addPage(p)
+      /*
+       * CUSTOM
+       * Example:
+       * 1,3,6-10
+       *
+       * => [1]
+       * => [3]
+       * => [6,7,8,9,10]
+       */
+      if (mode === "ranges") {
+        groups = parseRangeGroups(
+          ranges,
+          pdf.getPageCount()
         );
 
-        const pdfBytes =
-          await newPdf.save();
+        if (!groups.length) {
+          setRangeError("Invalid page range");
+          setLoading(false);
+          return;
+        }
+      }
 
-        const blob =
-          new Blob([pdfBytes], {
-            type: "application/pdf",
-          });
+      /*
+       * ODD
+       * Every odd page becomes its own PDF
+       */
+      if (mode === "odd") {
+        for (let i = 1; i <= pdf.getPageCount(); i++) {
+          if (i % 2 !== 0) {
+            groups.push({
+              label: `${i}`,
+              pages: [i],
+            });
+          }
+        }
+      }
+
+      /*
+       * EVEN
+       * Every even page becomes its own PDF
+       */
+      if (mode === "even") {
+        for (let i = 1; i <= pdf.getPageCount(); i++) {
+          if (i % 2 === 0) {
+            groups.push({
+              label: `${i}`,
+              pages: [i],
+            });
+          }
+        }
+      }
+
+      const outputs = [];
+
+      /*
+       * CREATE SEPARATE PDFs
+       */
+      for (let i = 0; i < groups.length; i++) {
+        const group = groups[i];
+
+        const newPdf = await PDFDocument.create();
+
+        const copiedPages = await newPdf.copyPages(
+          pdf,
+          group.pages.map((page) => page - 1)
+        );
+
+        copiedPages.forEach((page) => {
+          newPdf.addPage(page);
+        });
+
+        const pdfBytes = await newPdf.save();
+
+        const blob = new Blob(
+          [pdfBytes],
+          { type: "application/pdf" }
+        );
 
         outputs.push({
-          url:
-            URL.createObjectURL(
-              blob
-            ),
-
+          url: URL.createObjectURL(blob),
           blob,
-
-          name:
-            cleanName +
-            "_" +
-            mode +
-            ".pdf",
-
+          name: `${cleanName}_pages_${group.label}.pdf`,
           size: blob.size,
         });
 
-        setProgress(100);
+        setProgress(
+          ((i + 1) / groups.length) * 80
+        );
       }
 
-      setResults(outputs);
+      /*
+       * CREATE ONE COMBINED PDF
+       *
+       * Contains all selected/split pages
+       * in the same order.
+       */
+      const combinedPdf = await PDFDocument.create();
 
+      const allPages = [];
+
+      groups.forEach((group) => {
+        group.pages.forEach((page) => {
+          allPages.push(page - 1);
+        });
+      });
+
+      const copiedCombinedPages =
+        await combinedPdf.copyPages(
+          pdf,
+          allPages
+        );
+
+      copiedCombinedPages.forEach((page) => {
+        combinedPdf.addPage(page);
+      });
+
+      const combinedBytes =
+        await combinedPdf.save();
+
+      const combinedBlob = new Blob(
+        [combinedBytes],
+        { type: "application/pdf" }
+      );
+
+      const combinedUrl =
+        URL.createObjectURL(combinedBlob);
+
+      setCombinedResult({
+        url: combinedUrl,
+        blob: combinedBlob,
+        name: `${cleanName}_combined.pdf`,
+        size: combinedBlob.size,
+      });
+
+      setProgress(100);
+
+      setResults(outputs);
       setSuccess(true);
+
     } catch (error) {
       console.error(error);
 
@@ -430,7 +438,6 @@ export default function PDFSplitter() {
       setLoading(false);
     }
   };
-
   /* ZIP DOWNLOAD */
   const downloadAll = async () => {
     const zip = new JSZip();
@@ -439,10 +446,9 @@ export default function PDFSplitter() {
       zip.file(r.name, r.blob);
     });
 
-    const content =
-      await zip.generateAsync({
-        type: "blob",
-      });
+    const content = await zip.generateAsync({
+      type: "blob",
+    });
 
     saveAs(
       content,
@@ -450,6 +456,14 @@ export default function PDFSplitter() {
     );
   };
 
+  const downloadCombined = () => {
+    if (!combinedResult) return;
+
+    saveAs(
+      combinedResult.blob,
+      combinedResult.name
+    );
+  };
   /* RESET */
   const reset = () => {
     clearResults();
@@ -457,7 +471,7 @@ export default function PDFSplitter() {
     setFile(null);
 
     setResults([]);
-
+    setCombinedResult(null);
     setRanges("");
 
     setMode("each");
@@ -599,26 +613,23 @@ export default function PDFSplitter() {
                   </div>
                 )}
 
-                {parsedPages.length >
-                  0 && (
-                    <div className="flex flex-wrap gap-2 mt-3">
+                {parsedGroups.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-3">
+                    {parsedGroups.map((group) => (
+                      <span
+                        key={group.label}
+                        className="
+          px-3 py-1 rounded-full
+          bg-blue-100 text-blue-700
+          text-xs font-semibold
+        "
+                      >
+                        {group.label}
+                      </span>
+                    ))}
+                  </div>
+                )}
 
-                      {parsedPages.map(
-                        (p) => (
-                          <span
-                            key={p}
-                            className="
-                            px-3 py-1 rounded-full
-                            bg-blue-100 text-blue-700
-                            text-xs font-semibold
-                          "
-                          >
-                            {p}
-                          </span>
-                        )
-                      )}
-                    </div>
-                  )}
               </div>
             )}
 
@@ -782,51 +793,76 @@ export default function PDFSplitter() {
             </div>
 
             {/* RESULT BUTTONS */}
-            <div className="flex gap-4">
+            <div className="space-y-3">
 
-              {/* ZIP */}
+              {/* DOWNLOAD ZIP */}
               <button
                 onClick={downloadAll}
                 className="
-                w-full
-                flex items-center justify-center gap-2
-                h-11
-                rounded-2xl
-                bg-gradient-to-r
-                from-emerald-500
-                to-green-600
-                text-white
-                font-bold text-sm
-                shadow-lg shadow-green-500/20
-                hover:scale-[1.02]
-                transition-all duration-300
-              "
+      w-full
+      flex items-center justify-center gap-2
+      h-11
+      rounded-2xl
+      bg-gradient-to-r
+      from-emerald-500
+      to-green-600
+      text-white
+      font-bold text-sm
+      shadow-lg shadow-green-500/20
+      hover:scale-[1.02]
+      transition-all duration-300
+    "
               >
                 <Download className="w-4 h-4" />
                 Download ZIP
               </button>
 
+              {/* COMBINED PDF */}
+              {combinedResult && (
+                <button
+                  onClick={downloadCombined}
+                  className="
+        w-full
+        flex items-center justify-center gap-2
+        h-11
+        rounded-2xl
+        bg-gradient-to-r
+        from-blue-600
+        to-cyan-500
+        text-white
+        font-bold text-sm
+        shadow-lg shadow-blue-500/20
+        hover:scale-[1.02]
+        transition-all duration-300
+      "
+                >
+                  <Download className="w-4 h-4" />
+                  Download Combined PDF
+                </button>
+              )}
+
               {/* RESET */}
               <button
                 onClick={reset}
                 className="
-                w-full
-                flex items-center justify-center gap-2
-                h-11
-                rounded-2xl
-                bg-gradient-to-r
-                from-orange-500
-                to-red-500
-                text-white
-                font-bold text-sm
-                shadow-lg shadow-orange-500/20
-                hover:scale-[1.02]
-                transition-all duration-300
-              "
+      w-full
+      flex items-center justify-center gap-2
+      h-11
+      rounded-2xl
+      bg-gradient-to-r
+      from-orange-500
+      to-red-500
+      text-white
+      font-bold text-sm
+      shadow-lg shadow-orange-500/20
+      hover:scale-[1.02]
+      transition-all duration-300
+    "
               >
                 <RotateCcw className="w-4 h-4" />
                 Start Over
               </button>
+
             </div>
           </div>
         )}
