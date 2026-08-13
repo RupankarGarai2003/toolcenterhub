@@ -2,6 +2,7 @@ import "./globals.css";
 import Header from "@/components/tools/Header";
 import Footer from "@/components/tools/Footer";
 import { Montserrat, Inter } from "next/font/google";
+import ScrollButton from "@/components/ScrollButton";
 import Script from "next/script";
 import type {
   Metadata,
@@ -226,6 +227,8 @@ export default function RootLayout({
         </main>
 
         <Footer />
+
+        <ScrollButton />
 
         {/* Google Analytics */}
         <Script
