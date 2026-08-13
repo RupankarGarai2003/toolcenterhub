@@ -1,10 +1,13 @@
 "use client";
 import FAQ from "@/components/tool-content/FAQ";
+import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { tools } from "@/lib/toolsList";
 import "../components/Styles/page.css"
 import CustomButton from "../components/tools/CustomButton";
+
+
 
 import {
   Image,
@@ -118,7 +121,7 @@ function getCategory(tool: any) {
   return "tool";
 }
 
-export default function Home() {
+function HomeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -205,12 +208,7 @@ export default function Home() {
         ? tools.filter((t) => userChoiceSlugs.includes(t.slug))
         : tools.filter((t) => getCategory(t) === activeTab);
 
-  console.log("Active Tab:", activeTab);
 
-  console.log(
-    "Filtered Tools:",
-    tools.filter((t) => getCategory(t) === activeTab)
-  );
   const tabs = [
     { label: "All", value: "all" },
     { label: "Image", value: "image" },
@@ -423,5 +421,13 @@ export default function Home() {
         />
       </section>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={null}>
+      <HomeContent />
+    </Suspense>
   );
 }
