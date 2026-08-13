@@ -133,14 +133,21 @@ function HomeContent() {
     "pdf",
     "dev",
     "calculator",
-    "text",
-    "tool",
+    "ai-tools",
+    "utility",
     "choice",
   ];
 
-  const activeTab = validTabs.includes(category || "")
+  const activeCategory = validTabs.includes(category || "")
     ? category!
     : "all";
+
+  const activeTab =
+    activeCategory === "ai-tools"
+      ? "text"
+      : activeCategory === "utility"
+        ? "tool"
+        : activeCategory;
 
   const homeFaqs = [
     {
@@ -208,15 +215,14 @@ function HomeContent() {
         ? tools.filter((t) => userChoiceSlugs.includes(t.slug))
         : tools.filter((t) => getCategory(t) === activeTab);
 
-
   const tabs = [
     { label: "All", value: "all" },
     { label: "Image", value: "image" },
     { label: "PDF", value: "pdf" },
     { label: "Dev", value: "dev" },
     { label: "Calculator", value: "calculator" },
-    { label: "AI Tools", value: "text" },
-    { label: "Utility", value: "tool" },
+    { label: "AI Tools", value: "ai-tools" },
+    { label: "Utility", value: "utility" },
     { label: "⭐ User’s Choice", value: "choice" },
   ];
 
